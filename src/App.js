@@ -5,10 +5,12 @@ import { routes } from './routes/Routes';
 
 function App() {
   return (
-    <RouterProvider router={routes} className="">
-      <h1>Development Start</h1>
-      <Toaster />
-    </RouterProvider>
+    <div className='max-w-screen-xl	mx-auto'>
+      <RouterProvider router={routes} className="">
+        <h1>Development Start</h1>
+        <Toaster />
+      </RouterProvider>
+    </div>
   );
 }
 
