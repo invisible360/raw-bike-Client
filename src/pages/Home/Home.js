@@ -1,12 +1,14 @@
 import React from 'react';
-import Advertisement from './Advertisement';
+import Advertisements from './Advertisements';
 import ProductCategories from './ProductCategories';
+import UserFeedback from './UserFeedback';
 
 const Home = () => {
     return (
         <div>
             <ProductCategories></ProductCategories>
-            <Advertisement></Advertisement>
+            <Advertisements></Advertisements>
+            <UserFeedback></UserFeedback>
         </div>
     );
 };
