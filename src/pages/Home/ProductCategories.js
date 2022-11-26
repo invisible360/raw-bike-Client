@@ -16,7 +16,7 @@ const ProductCategories = () => {
         },
         {
             _id: 3,
-            name: "Adventure Bikes",
+            name: "Ride Sharing Bikes",
             bgColor: "bg-teal-500"
         },
     ]

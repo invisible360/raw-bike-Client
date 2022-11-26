@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 const NavHeader = () => {
 
     const menuItems = <>
-        <li className='text-white'><Link to="/">Home</Link></li>
-        <li className='text-white'><Link to='/dasboard'>Dashbord</Link></li>
+        <li className='text-blue-500'><Link to="/home">Home</Link></li>
+        <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>
 
     </>
 
