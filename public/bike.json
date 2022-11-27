@@ -1,0 +1,63 @@
+[
+    {
+        "categoryName": "Sports Bikes",
+        "name": "Repsol",
+        "image": "https://ibb.co/12SBqxW",
+        "location": "Dhaka",
+        "resalePrice": 5000,
+        "originalPrice": 12000,
+        "yearsOfUsed": 7,
+        "sellerName": "Waren Spooty"
+    },
+    {
+        "categoryName": "Sports Bikes",
+        "name": "Suzuki",
+        "image": "https://ibb.co/Twg7Q3n",
+        "location": "Khulna",
+        "resalePrice": 6000,
+        "originalPrice": 11000,
+        "yearsOfUsed": 5,
+        "sellerName": "Waren Saju"
+    },
+    {
+        "categoryName": "Scooters",
+        "name": "Vespa",
+        "image": "https://ibb.co/gymhmBj",
+        "location": "Comilla",
+        "resalePrice": 2000,
+        "originalPrice": 5000,
+        "yearsOfUsed": 8,
+        "sellerName": "Vespa Raju"
+    },
+    {
+        "categoryName": "Scooters",
+        "name": "TVS Ntorque",
+        "image": "https://ibb.co/1mtVXrs",
+        "location": "Chattagram",
+        "resalePrice": 3000,
+        "originalPrice": 10000,
+        "yearsOfUsed": 9,
+        "sellerName": "Teli Tutul"
+    },
+    {
+        "categoryName": "Ride Sharing Bikes",
+        "name": "Hero Splender",
+        "image": "https://ibb.co/2KSy1dN",
+        "location": "Barishal",
+        "resalePrice": 2000,
+        "originalPrice": 4000,
+        "yearsOfUsed": 6,
+        "sellerName": "Zahid Khan"
+    },
+    {
+        "categoryName": "Ride Sharing Bikes",
+        "name": "TVS Stryker",
+        "image": "https://ibb.co/GHr04pW",
+        "location": "Pabna",
+        "resalePrice": 1500,
+        "originalPrice": 5000,
+        "yearsOfUsed": 3,
+        "sellerName": "Talha Sarkar"
+    }
+
+]

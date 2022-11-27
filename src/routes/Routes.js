@@ -20,12 +20,13 @@ const routes = createBrowserRouter([
         ]
     },
     {
-        path: '/categoryDetails/:catID',
+        path: '/categoryDetails/:catName',
         element: <OtherPageLayout></OtherPageLayout>,
         children: [
             {
-                path: '/categoryDetails/:catID',
-                element: <CategoryDetailsPage></CategoryDetailsPage>
+                path: '/categoryDetails/:catName',
+                element: <CategoryDetailsPage></CategoryDetailsPage>,
+                loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
             }
         ]
     }
