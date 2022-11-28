@@ -6,6 +6,7 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import SignupSeller from "../pages/Signup/SignupSeller"
+import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
     {
@@ -40,7 +41,7 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/categoryDetails/:catName',
-                element: <CategoryDetailsPage></CategoryDetailsPage>,
+                element: <PrivateRoute><CategoryDetailsPage></CategoryDetailsPage></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
             }
         ]
