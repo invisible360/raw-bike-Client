@@ -3,6 +3,9 @@ import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
 import Home from "../pages/Home/Home";
+import Login from "../pages/Login/Login";
+import Signup from "../pages/Signup/Signup";
+import SignupSeller from "../pages/Signup/SignupSeller"
 
 const routes = createBrowserRouter([
     {
@@ -16,6 +19,18 @@ const routes = createBrowserRouter([
             {
                 path: '/home',
                 element: <Home></Home>
+            },
+            {
+                path: '/login',
+                element: <Login></Login>
+            },
+            {
+                path: '/signup',
+                element: <Signup></Signup>
+            },
+            {
+                path: '/sellerSignin',
+                element: <SignupSeller></SignupSeller>
             }
         ]
     },
@@ -27,7 +42,11 @@ const routes = createBrowserRouter([
                 path: '/categoryDetails/:catName',
                 element: <CategoryDetailsPage></CategoryDetailsPage>,
                 loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
-            }
+            },
+            // {
+            //     path: '/login',
+            //     element: <Login></Login>
+            // }
         ]
     }
 ])

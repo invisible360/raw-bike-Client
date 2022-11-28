@@ -15,7 +15,7 @@ const Signup = () => {
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
-                <h1 className="text-2xl font-bold text-center">Sign Up  as Buyer</h1>
+                <h1 className="text-2xl font-bold text-center">Sign Up as Seller</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="block text-gray-600">Name</label>
@@ -60,10 +60,10 @@ const Signup = () => {
                         <ImTwitter></ImTwitter>
                     </button>
                 </div>
-                <p className="text-lg text-center sm:px-6 text-gray-600">Are You Seller? 
-                    <Link rel="noopener noreferrer" to="/sellerSignin" className="underline text-gray-800">Create Account as Seller</Link>
+                <p className="text-lg text-center sm:px-6 text-gray-600">Are You Seller?
+                    <Link rel="noopener noreferrer" to="/signup" className="underline text-gray-800">Create Account as Buyer</Link>
                 </p>
-                <p className="text-lg text-center sm:px-6 text-gray-600">Already have an Account? 
+                <p className="text-lg text-center sm:px-6 text-gray-600">Already have an Account?
                     <Link rel="noopener noreferrer" to="/login" className="underline text-gray-800">Login</Link>
                 </p>
             </div>

@@ -30,7 +30,7 @@ const Login = () => {
                             <Link rel="noopener noreferrer" to="#">Forgot Password?</Link>
                         </div>
                     </div>
-                    <button className="block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign in</button>
+                    <button className=" btn btn-success block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign in</button>
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
@@ -46,7 +46,7 @@ const Login = () => {
                     </button>
                 </div>
                 <p className="text-lg text-center sm:px-6 text-gray-600">Don't have an account?
-                    <Link rel="noopener noreferrer" to="/signup" className="underline text-gray-800">Sign up</Link>
+                    <Link rel="noopener noreferrer" to="/signup" className=" underline text-gray-800">Sign up</Link>
                 </p>
             </div>
 
