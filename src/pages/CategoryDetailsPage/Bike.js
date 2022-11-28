@@ -1,6 +1,7 @@
 import React from 'react';
 import { GoVerified } from "react-icons/go";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
+import BookingModal from '../BookingModal/BookingModal';
 
 const Bike = ({ bike }) => {
     console.log(bike);
@@ -39,7 +40,9 @@ const Bike = ({ bike }) => {
                                         <span>Seller: {bike.sellerName}</span>
                                         <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
                                     </div>
-                                    <button type="button" className="btn btn-success px-6 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</button>
+                                    <label type="button" htmlFor="booking-modal" className="btn btn-success px-6 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
+                                    
+                                    <BookingModal></BookingModal>
                                 </div>
                             </div>
                         </div>
