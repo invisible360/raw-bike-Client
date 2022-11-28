@@ -3,8 +3,10 @@ import { useForm } from 'react-hook-form';
 import { FcGoogle } from 'react-icons/fc';
 import { ImTwitter } from 'react-icons/im';
 import { Link } from 'react-router-dom';
+import useTitle from '../../hooks/useTitle';
 
 const Signup = () => {
+    useTitle ('Seller Sign Up')
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
 
     const onSubmit = data => {

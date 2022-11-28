@@ -42,11 +42,7 @@ const routes = createBrowserRouter([
                 path: '/categoryDetails/:catName',
                 element: <CategoryDetailsPage></CategoryDetailsPage>,
                 loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
-            },
-            // {
-            //     path: '/login',
-            //     element: <Login></Login>
-            // }
+            }
         ]
     }
 ])

@@ -1,7 +1,6 @@
 import React from 'react';
 import { GoVerified } from "react-icons/go";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
-import 'react-photo-view/dist/react-photo-view.css';
 
 const Bike = ({ bike }) => {
     console.log(bike);
@@ -27,7 +26,7 @@ const Bike = ({ bike }) => {
                                 </div>
                                 <div className="text-right">
                                     <p className="text-lg font-semibold">${bike.resalePrice}</p>
-                                    <p className="">Original Price: <span className='text-sm line-through text-gray-400'>{bike.originalPrice}$</span></p>
+                                    <p className="">Original Price: <span className='text-sm line-through text-gray-400'>${bike.originalPrice}</span></p>
                                 </div>
                             </div>
                             <div className="flex text-sm divide-x mt-5">
