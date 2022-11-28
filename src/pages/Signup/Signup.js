@@ -8,11 +8,6 @@ import useTitle from '../../hooks/useTitle';
 const Signup = () => {
     useTitle('Buyer Sign Up');
 
-    // const onSubmit = data => {
-    //     console.log(data);
-    //     reset()
-    // }
-
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
@@ -28,25 +23,29 @@ const Signup = () => {
     //     navigate('/');
     // }
 
+
     const handleSignUp = (data) => {
         setSignUPError('');
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                toast.success('Buyer Created Successfully.')
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
                     .then(() => {
                         saveBuyer(data.name, data.email);
+                        toast.success(`Welcome ${data.name}`);
+                        navigate('/');
+
                     })
                     .catch(err => console.log(err));
             })
             .catch(error => {
-                console.log(error)
-                setSignUPError(error.message)
+                console.log(error);
+                setSignUPError(error?.message);
+                reset();
             });
     }
 
@@ -62,12 +61,12 @@ const Signup = () => {
             .then(res => res.json())
             .then(data => {
                 // setCreatedUserEmail(email);
-                reset();
-                navigate ('/');
-                
+                if (data.acknowledged) {
+                    navigate(0);
+                }
             })
     }
-
+    
 
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
@@ -93,7 +92,6 @@ const Signup = () => {
                         <input type="password" {...register("password", {
                             required: "Password required",
                             minLength: { value: 6, message: "Password must be 6 Character Long" },
-                            /* pattern: { value: /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])$/, message: "Password Must Strong"} */
                         })} id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
 
 

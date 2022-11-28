@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
-import { ImTwitter } from "react-icons/im";
 import { useForm } from 'react-hook-form';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
+import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import Loader from '../../shared/Loader';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
@@ -20,19 +22,39 @@ const Login = () => {
         reset()
     };
 
+    const { data: buyers = [], refetch, isLoading } = useQuery({
+        queryKey: ['buyers'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5001/buyers`);
+            const data = await res.json();
+            return data;
+        }
+    })
 
 
     const handleGoogleSignIn = () => {
+        setSignUPError('');
         googleLogin()
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                saveBuyer(user.displayName, user.email);
+                const alreadyBuyer = buyers.find(buyer => buyer.email === user.email)
+                if (!alreadyBuyer) {
+                    saveBuyer(user.displayName, user.email);
+                    toast.success(`Welcome ${user.displayName}`);
+                    refetch ();
+                }
+                else {
+                    toast.success(`Welcome ${user.displayName}`);
+                    navigate(from, { replace: true });
+                    refetch ();
+                }
+
 
             })
             .then(error => {
                 console.error(error);
-                setSignUPError(error.message)
+                setSignUPError(error?.message);
             })
 
     }
@@ -49,17 +71,23 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 // setCreatedUserEmail(email);
-                reset();
-                navigate(from, { replace: true });
+                // console.log(data);
+                if (data.acknowledged) {
+                    navigate(from, { replace: true });
+                    reset();
+                }
 
             })
     }
 
+    if (isLoading) {
+        return <Loader></Loader>
+    }
 
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
-                <h1 className="text-2xl font-bold text-center">Login</h1>
+                <h1 className="text-2xl font-bold text-center">Login {buyers.length}</h1>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="block text-gray-600">Email</label>
@@ -88,9 +116,7 @@ const Login = () => {
                     <button onClick={handleGoogleSignIn} aria-label="Log in with Google" className="text-2xl">
                         <FcGoogle></FcGoogle>
                     </button>
-                    <button aria-label="Log in with Twitter" className="text-2xl">
-                        <ImTwitter></ImTwitter>
-                    </button>
+                    
                 </div>
                 <p className="text-lg text-center sm:px-6 text-gray-600">Don't have an account?
                     <Link rel="noopener noreferrer" to="/signup" className=" underline text-gray-800">Sign up</Link>

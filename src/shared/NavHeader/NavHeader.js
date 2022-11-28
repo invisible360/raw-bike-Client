@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
+import noPhotoThumb from '../../assets/placeholder.png'
 
 const NavHeader = () => {
     const { user, logout } = useContext(AuthContext);
@@ -14,7 +15,6 @@ const NavHeader = () => {
     const menuItems = <>
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
         <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>
-
 
 
     </>
@@ -41,15 +41,23 @@ const NavHeader = () => {
                     {/* Avatar */}
                     <div className="avatar lg:hidden">
                         <div className="w-12 rounded-full">
-                            <img src="https://placeimg.com/192/192/people" alt='' />
+                            {
+                                user ?
+                                    <img src={user.photoURL} alt='' />
+                                    :
+                                    <img src={noPhotoThumb} alt='NoPhoto' />
+                            }
                         </div>
                     </div>
                 </label>
                 <ul tabIndex={1} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-36">
-                    <li><Link>Profile Name</Link></li>
+
                     {
                         user ?
-                            <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                            <>
+                                <li className='text-blue-500'><Link to='/profile'>{user.displayName}</Link></li>
+                                <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                            </>
                             :
                             <li><Link to='/login'><button className='btn btn-sm btn-success btn-outline'>Sign In</button></Link></li>
                     }
@@ -63,7 +71,10 @@ const NavHeader = () => {
                     {menuItems}
                     {
                         user ?
-                            <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                            <>
+                                <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                                <li className='text-blue-500'><Link to='/profile'>{user.displayName}</Link></li>
+                            </>
                             :
                             <li><Link to='/login'><button className='btn btn-sm btn-success btn-outline'>Sign In</button></Link></li>
                     }
@@ -73,7 +84,12 @@ const NavHeader = () => {
                 {/* Avatar */}
                 <div className="avatar">
                     <div className="w-12 rounded-full">
-                        <img src="https://placeimg.com/192/192/people" alt='' />
+                        {
+                            user ?
+                                <img src={user.photoURL} alt='' />
+                                :
+                                <img src={noPhotoThumb} alt='NoPhoto' />
+                        }
                     </div>
                 </div>
             </div>
