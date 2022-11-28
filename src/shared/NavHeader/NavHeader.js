@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext/AuthProvider';
 
 const NavHeader = () => {
+    const { user, logout } = useContext(AuthContext);
+
+    const handleSignOut = () => {
+        logout()
+            .then(() => { })
+            .catch(error => console.error(error))
+    }
 
     const menuItems = <>
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
         <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>
-        <li className='text-blue-500'><Link to='/login'>Login</Link></li>
+
+
 
     </>
 
@@ -38,7 +47,12 @@ const NavHeader = () => {
                 </label>
                 <ul tabIndex={1} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-36">
                     <li><Link>Profile Name</Link></li>
-                    <li><Link className='btn btn-sm btn-warning btn-outline'>Sign In</Link></li>
+                    {
+                        user ?
+                            <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                            :
+                            <li><Link to='/login'><button className='btn btn-sm btn-success btn-outline'>Sign In</button></Link></li>
+                    }
                 </ul>
             </div>
 
@@ -47,7 +61,13 @@ const NavHeader = () => {
             <div className="navbar-end hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
                     {menuItems}
-                    <li><Link><button className='btn btn-sm btn-warning btn-outline'>Sign In</button></Link></li>
+                    {
+                        user ?
+                            <li><Link to='/login'><button onClick={handleSignOut} className='btn btn-sm btn-warning btn-outline'>Sign Out</button></Link></li>
+                            :
+                            <li><Link to='/login'><button className='btn btn-sm btn-success btn-outline'>Sign In</button></Link></li>
+                    }
+
                 </ul>
 
                 {/* Avatar */}
