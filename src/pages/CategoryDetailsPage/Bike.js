@@ -1,5 +1,7 @@
 import React from 'react';
 import { GoVerified } from "react-icons/go";
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const Bike = ({ bike }) => {
     console.log(bike);
@@ -9,7 +11,13 @@ const Bike = ({ bike }) => {
             <ul className="flex flex-col divide-y divide-gray-300">
                 <li className="flex flex-col sm:flex-row sm:justify-between">
                     <div className="flex w-full space-x-2 sm:space-x-4">
-                        <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500" src={bike.image} alt="bike" />
+                        <PhotoProvider>
+                            <PhotoView src={bike.image}>
+                                <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500" src={bike.image} alt="" />
+                            </PhotoView>
+                        </PhotoProvider>
+
+                        {/* <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500" src={bike.image} alt="bike" /> */}
                         <div className="flex flex-col justify-between w-full pb-4">
                             <div className="flex justify-between w-full pb-2 space-x-2">
                                 <div className="space-y-1">
