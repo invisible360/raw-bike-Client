@@ -1,15 +1,59 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { ImTwitter } from "react-icons/im";
 import { useForm } from 'react-hook-form';
+import { AuthContext } from '../../context/AuthContext/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { googleLogin } = useContext(AuthContext);
+
+    const [signUpError, setSignUPError] = useState('');
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from.pathname || '/';
+
     const onSubmit = data => {
         console.log(data);
         reset()
     };
+
+
+
+    const handleGoogleSignIn = () => {
+        googleLogin()
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                saveBuyer(user.displayName, user.email);
+
+            })
+            .then(error => {
+                console.error(error);
+                setSignUPError(error.message)
+            })
+
+    }
+
+    const saveBuyer = (name, email) => {
+        const buyer = { name, email };
+        fetch('http://localhost:5001/buyers', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(buyer)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // setCreatedUserEmail(email);
+                reset();
+                navigate(from, { replace: true });
+
+            })
+    }
 
 
     return (
@@ -31,6 +75,9 @@ const Login = () => {
                         </div>
                     </div>
                     <button className=" btn btn-success block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign in</button>
+
+                    {signUpError && <p className='text-red-600'>{signUpError}</p>}
+
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
                     <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
@@ -38,7 +85,7 @@ const Login = () => {
                     <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
                 </div>
                 <div className="flex justify-center space-x-8">
-                    <button aria-label="Log in with Google" className="text-2xl">
+                    <button onClick={handleGoogleSignIn} aria-label="Log in with Google" className="text-2xl">
                         <FcGoogle></FcGoogle>
                     </button>
                     <button aria-label="Log in with Twitter" className="text-2xl">

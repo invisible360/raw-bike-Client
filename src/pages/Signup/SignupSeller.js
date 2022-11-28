@@ -1,24 +1,64 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { FcGoogle } from 'react-icons/fc';
-import { ImTwitter } from 'react-icons/im';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext/AuthProvider';
 import useTitle from '../../hooks/useTitle';
 
 const Signup = () => {
-    useTitle ('Seller Sign Up')
+    useTitle('Seller Sign Up')
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
+    const [signUpError, setSignUPError] = useState('');
+    const { createUser, updateUser } = useContext(AuthContext);
 
-    const onSubmit = data => {
-        console.log(data);
-        reset()
+
+    const navigate = useNavigate();
+
+    const handleSignUp = (data) => {
+        setSignUPError('');
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                toast.success('Seller Created Successfully.')
+                const userInfo = {
+                    displayName: data.name
+                }
+                updateUser(userInfo)
+                    .then(() => {
+                        saveSeller(data.name, data.email);
+                    })
+                    .catch(err => console.log(err));
+            })
+            .catch(error => {
+                console.log(error)
+                setSignUPError(error.message)
+            });
+    }
+
+    const saveSeller = (name, email) => {
+        const seller = { name, email };
+        fetch('http://localhost:5001/sellers', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(seller)
+        })
+            .then(res => res.json())
+            .then(data => {
+                // setCreatedUserEmail(email);
+                reset();
+                navigate('/');
+
+            })
     }
 
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
                 <h1 className="text-2xl font-bold text-center">Sign Up as Seller</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ng-untouched ng-pristine ng-valid">
+                <form onSubmit={handleSubmit(handleSignUp)} className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="block text-gray-600">Name</label>
                         <input type="text" {...register("name", { required: "Name is Required" })} id="username" placeholder="Name" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
@@ -48,21 +88,12 @@ const Signup = () => {
                         </div>
                     </div>
                     <button className="btn btn-success block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign Up</button>
+
+                    {signUpError && <p className='text-red-600'>{signUpError}</p>}
+
                 </form>
-                <div className="flex items-center pt-4 space-x-1">
-                    <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
-                    <p className="px-3 text-md text-gray-600">Login with social accounts</p>
-                    <div className="flex-1 h-px sm:w-16 bg-gray-300"></div>
-                </div>
-                <div className="flex justify-center space-x-8">
-                    <button aria-label="Log in with Google" className="text-2xl">
-                        <FcGoogle></FcGoogle>
-                    </button>
-                    <button aria-label="Log in with Twitter" className="text-2xl">
-                        <ImTwitter></ImTwitter>
-                    </button>
-                </div>
-                <p className="text-lg text-center sm:px-6 text-gray-600">Are You Seller?
+
+                <p className="text-lg text-center sm:px-6 text-gray-600">Are You Buyer?
                     <Link rel="noopener noreferrer" to="/signup" className="underline text-gray-800">Create Account as Buyer</Link>
                 </p>
                 <p className="text-lg text-center sm:px-6 text-gray-600">Already have an Account?
