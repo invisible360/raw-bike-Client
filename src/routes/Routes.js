@@ -55,12 +55,12 @@ const routes = createBrowserRouter([
             {
                 path: '/dashboard',
                 element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
-                loader: () => fetch(`http://localhost:5001/bookings`)
+                // loader: () => fetch(`http://localhost:5001/bookings`)
             },
             {
                 path: '/dashboard/myOrders',
                 element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
-                loader: () => fetch(`http://localhost:5001/bookings`)
+                // loader: () => fetch(`http://localhost:5001/bookings`)
             }
         ]
     }

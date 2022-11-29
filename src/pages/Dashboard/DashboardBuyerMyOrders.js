@@ -1,10 +1,48 @@
-import React from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext/AuthProvider';
 import Loader from '../../shared/Loader';
 
 const DashboardBuyerMyOrders = () => {
-    const bookings = useLoaderData();
-    if (!bookings) {
+    const { user } = useContext(AuthContext);
+
+    const { data: bookings = [], isLoading, refetch } = useQuery({
+        queryKey: ['bookings'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5001/bookings?email=${user?.email}`);
+            const data = await res.json();
+            return data;
+        }
+    })
+
+
+
+
+    const deleteBooking = id => {
+        const permission = window.confirm('Are Your Sure Want to Delete?')
+        // console.log(id);
+        if (permission) {
+            fetch(`http://localhost:5001/bookings/${id}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    refetch();
+                    toast.success(`Order Deleted Successfully`)
+                })
+        }
+        else {
+
+            toast.success('Item Still in Database');
+        }
+
+
+    }
+
+    if (isLoading) {
         return <Loader></Loader>
     }
 
@@ -30,7 +68,7 @@ const DashboardBuyerMyOrders = () => {
                             bookings.map(booking =>
                                 <tr key={booking._id} className="">
                                     <td className="px-3 py-2">
-                                        <Link to="" className='btn btn-error'>X</Link>
+                                        <Link onClick={() => deleteBooking(booking._id)} className='btn btn-error'>X</Link>
                                     </td>
                                     <td className="px-3 text-2xl font-medium dark:text-gray-400">
 
@@ -46,7 +84,7 @@ const DashboardBuyerMyOrders = () => {
                                         <span>${booking.price}</span>
 
                                     </td>
-                                    
+
                                     <td className="px-3 py-2">
                                         <Link className='btn btn-success'>Pay</Link>
                                     </td>

@@ -30,10 +30,6 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
 
         }
 
-        // TODO: send data to the server
-        // and once data is saved then close the modal 
-        // and display success toast
-
         fetch('http://localhost:5001/bookings', {
             method: 'POST',
             headers: {
@@ -45,12 +41,11 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
             .then(data => {
                 console.log(data);
                 if (data.acknowledged) {
-                    // setTreatment(null);
                     toast.success('Booking confirmed');
                     form.reset();
                     setModal(false);
-                    navigate ('/dashboard/myOrders')
-                    // refetch();
+                    // navigate ('/dashboard/myOrders')
+                    
                 }
                 else {
                     toast.error(data.message);
