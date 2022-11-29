@@ -5,7 +5,7 @@ import Footer from '../shared/Footer/Footer';
 
 const HomeLayout = () => {
     return (
-        <div>
+        <div className='min-h-screen'>
             <Banner></Banner>
             <Outlet></Outlet>
             <Footer></Footer>

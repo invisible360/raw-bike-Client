@@ -14,7 +14,7 @@ const NavHeader = () => {
 
     const menuItems = <>
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
-        <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>
+        {user && <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>}
 
 
     </>
@@ -32,7 +32,7 @@ const NavHeader = () => {
                 </div>
 
 
-                <Link to='/' className="btn btn-ghost normal-case text-xl"><span className='italic font-bold text-3xl text-yellow-300'>Raw Bike.</span></Link>
+                <Link to='/' className="btn btn-ghost normal-case text-xl"><span className='italic font-bold text-3xl text-yellow-500'>Raw Bike.</span></Link>
             </div>
 
             {/* small device profile photo info */}

@@ -5,10 +5,12 @@ import NavHeader from '../shared/NavHeader/NavHeader';
 
 const OtherPageLayout = () => {
     return (
-        <div>
+        <div className='min-h-screen'>
             <NavHeader></NavHeader>
             <Outlet></Outlet>
-            <Footer></Footer>
+            <div className='absolute bottom-0 right-0 left-0 min '>
+                <Footer></Footer>
+            </div>
         </div>
     );
 };

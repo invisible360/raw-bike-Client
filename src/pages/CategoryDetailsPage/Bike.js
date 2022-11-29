@@ -6,8 +6,8 @@ import BookingModal from '../BookingModal/BookingModal';
 const Bike = ({ bike }) => {
     console.log(bike);
     return (
-        <div className='min-h-screen'>
-            <div className="flex flex-col max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800">
+        <div className=''>
+            <div className="flex flex-col lg:flex-row max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800">
 
                 <ul className="flex flex-col divide-y divide-gray-300">
                     <li className="flex flex-col sm:flex-row sm:justify-between">
@@ -35,13 +35,14 @@ const Bike = ({ bike }) => {
                                     <span type="button" className="flex items-center px-2 py-1 pl-0 space-x-1">Posted Date:</span>
                                     <span type="button" className="flex items-center px-2 space-x-1">Used: {bike.yearsOfUsed} Years</span>
                                 </div>
-                                <div className='flex justify-between'>
+                                <div className='flex flex-col lg:flex-row lg:justify-between'>
                                     <div className='flex items-center'>
                                         <span>Seller: {bike.sellerName}</span>
                                         <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
                                     </div>
-                                    <label type="button" htmlFor="booking-modal" className="btn btn-success px-6 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
                                     
+                                    <label type="button" htmlFor="booking-modal" className="btn btn-success px-6 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
+
                                     <BookingModal></BookingModal>
                                 </div>
                             </div>
