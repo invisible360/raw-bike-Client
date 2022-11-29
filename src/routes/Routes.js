@@ -4,6 +4,7 @@ import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
+import Payment from "../pages/Dashboard/Payment/Payment";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
@@ -61,6 +62,11 @@ const routes = createBrowserRouter([
                 path: '/dashboard/myOrders',
                 element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
                 // loader: () => fetch(`http://localhost:5001/bookings`)
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <Payment></Payment>,
+                loader: ({params}) => fetch(`http://localhost:5001/bookings/${params.id}`)
             }
         ]
     }

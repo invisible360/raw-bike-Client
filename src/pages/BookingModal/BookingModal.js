@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 
 const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
@@ -9,7 +9,7 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
     // const date = format(selectedDate, 'PP');
     const { user } = useContext(AuthContext);
     // console.log(bikeInfoForModal);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleBooking = event => {
         event.preventDefault();

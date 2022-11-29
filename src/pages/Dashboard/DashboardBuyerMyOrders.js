@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { FcPaid } from 'react-icons/fc';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 import Loader from '../../shared/Loader';
@@ -16,9 +17,6 @@ const DashboardBuyerMyOrders = () => {
             return data;
         }
     })
-
-
-
 
     const deleteBooking = id => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
@@ -39,7 +37,6 @@ const DashboardBuyerMyOrders = () => {
             toast.success('Item Still in Database');
         }
 
-
     }
 
     if (isLoading) {
@@ -59,8 +56,6 @@ const DashboardBuyerMyOrders = () => {
                             <th className="p-3">Product Name</th>
                             <th className="p-3">Price</th>
                             <th className="p-3">Payment Status</th>
-
-
                         </tr>
                     </thead>
                     <tbody>
@@ -68,7 +63,10 @@ const DashboardBuyerMyOrders = () => {
                             bookings.map(booking =>
                                 <tr key={booking._id} className="">
                                     <td className="px-3 py-2">
-                                        <Link onClick={() => deleteBooking(booking._id)} className='btn btn-error'>X</Link>
+                                        {
+                                            booking.price && !booking.paid && <Link onClick={() => deleteBooking(booking._id)} className='btn btn-error'>X</Link>
+                                        }
+
                                     </td>
                                     <td className="px-3 text-2xl font-medium dark:text-gray-400">
 
@@ -86,7 +84,20 @@ const DashboardBuyerMyOrders = () => {
                                     </td>
 
                                     <td className="px-3 py-2">
-                                        <Link className='btn btn-success'>Pay</Link>
+                                        {
+                                            booking.price && !booking.paid && <Link
+                                                to={`/dashboard/payment/${booking._id}`}
+                                            >
+                                                <label htmlFor="pay-modal" className="btn btn-success">Pay</label>
+
+                                            </Link>
+                                        }
+                                        {
+                                            booking.price && booking.paid && <div className='flex items-center'>
+                                                <span className='text-green-500 mr-3'>Paid</span> <FcPaid></FcPaid>
+                                            </div>
+                                        }
+
                                     </td>
 
                                 </tr>
