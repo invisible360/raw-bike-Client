@@ -1,15 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
+import BookingModal from '../BookingModal/BookingModal';
+import EmptyModal from '../BookingModal/EmptyModal';
 import Bike from './Bike';
 
 const CategoryDetailsPage = () => {
 
     const catBikes = useLoaderData();
 
+    const [bikeInfoForModal, setBikeInfoForModal] = useState(null);
     const [buyerInfo, setBuyerInfo] = useState('');
     const [sellerInfo, setsSellerInfo] = useState({});
-    // const [userName, setUsername] = useState('')
+    // const [userName, setUsername] = useState('');
+
+
 
     const { user } = useContext(AuthContext);
 
@@ -33,6 +38,7 @@ const CategoryDetailsPage = () => {
             })
     }, [user.email])
 
+
     return (
         <div className='w-[95%] mx-auto lg:w-full'>
             <h1 className='text-4xl text-center font-bold my-10'>Bike in this Category: {catBikes.length}</h1>
@@ -42,10 +48,22 @@ const CategoryDetailsPage = () => {
                     catBikes.map(bike => <Bike
                         key={bike._id}
                         bike={bike}
-                        buyerInfo={buyerInfo}
-                        sellerInfo={sellerInfo}
-                        // userName={userName}
+                        setBikeInfoForModal={setBikeInfoForModal}
                     ></Bike>)
+                }
+
+                {
+                    Object.keys(sellerInfo).length > 0 ?
+                        <>
+                            <EmptyModal></EmptyModal>
+                        </>
+                        :
+                        <>
+                            <BookingModal
+                                bikeInfoForModal={bikeInfoForModal}
+                                buyerInfo={buyerInfo}
+                            ></BookingModal>
+                        </>
                 }
             </div>
         </div>

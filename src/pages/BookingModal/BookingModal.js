@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 
-const BookingModal = ({ bike, buyerInfo }) => {
+const BookingModal = ({ bikeInfoForModal, buyerInfo }) => {
     // treatment is just another name of appointmentOptions with name, slots, _id
     // const { name: treatmentName, slots, price } = treatment;
     // const date = format(selectedDate, 'PP');
     const { user } = useContext(AuthContext);
+    console.log(bikeInfoForModal);
 
     // const handleBooking = event => {
     //     event.preventDefault();
@@ -68,10 +69,10 @@ const BookingModal = ({ bike, buyerInfo }) => {
                         <input name="name" type="text" disabled defaultValue={user.email} placeholder="Your Name" className="input w-full input-bordered" />
 
 
-                        <input name="name" type="text" disabled defaultValue={bike.name} placeholder="Your Name" className="input w-full input-bordered" />
+                        <input name="name" type="text" disabled defaultValue={bikeInfoForModal?.name} placeholder="Your Name" className="input w-full input-bordered" />
 
 
-                        <input name="name" type="text" disabled defaultValue={bike.resalePrice} placeholder="Your Name" className="input w-full input-bordered" />
+                        <input name="name" type="text" disabled defaultValue={bikeInfoForModal?.resalePrice} placeholder="Your Name" className="input w-full input-bordered" />
 
                         <input name="phone" type="text" placeholder="Phone Number" className="input w-full input-bordered" />
                         <input name="phone" type="text" placeholder="Location" className="input w-full input-bordered" />
