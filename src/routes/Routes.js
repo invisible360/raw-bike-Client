@@ -4,6 +4,7 @@ import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
+import DashboardSellerMyProducts from "../pages/Dashboard/DashboardSellerMyProducts";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
@@ -50,23 +51,31 @@ const routes = createBrowserRouter([
         ]
     },
     {
-        path: '/dashboard',
-        element: <DashboardLayout></DashboardLayout>,
+        path: '/dashboard/buyer',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
-                path: '/dashboard',
-                element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
-                // loader: () => fetch(`http://localhost:5001/bookings`)
+                path: '/dashboard/buyer',
+                element: <DashboardBuyerMyOrders></DashboardBuyerMyOrders>
             },
             {
-                path: '/dashboard/myOrders',
-                element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
-                // loader: () => fetch(`http://localhost:5001/bookings`)
+                path: '/dashboard/buyer/myOrders',
+                element: <DashboardBuyerMyOrders></DashboardBuyerMyOrders>
             },
             {
-                path: '/dashboard/payment/:id',
+                path: '/dashboard/buyer/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({params}) => fetch(`http://localhost:5001/bookings/${params.id}`)
+                loader: ({ params }) => fetch(`http://localhost:5001/bookings/${params.id}`)
+            }
+        ]
+    },
+    {
+        path: '/dashboard/seller',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard/seller',
+                element: <DashboardSellerMyProducts></DashboardSellerMyProducts>
             }
         ]
     }

@@ -135,7 +135,7 @@ const CheckoutForm = ({ booking }) => {
                 success && <div>
                     <p className='text-green-500'>{success}</p>
                     <p>Your transactionId: <span className='font-bold'>{transactionId}</span></p>
-                    <p>Go to <Link to="/dashboard" className='btn btn-link'>Dashboard to See Payment Status.</Link></p>
+                    <p>Go to <Link to="/dashboard/buyer/myOrders" className='btn btn-link'>Dashboard to See Payment Status.</Link></p>
                 </div>
             }
         </>

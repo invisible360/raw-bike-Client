@@ -33,7 +33,7 @@ const Login = () => {
         login(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user.email);
+                console.log(user);
 
                 fetch(`http://localhost:5001/users?users=${data.email}`)
                     .then(res => res.json())

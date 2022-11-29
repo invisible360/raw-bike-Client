@@ -1,10 +1,21 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 import noPhotoThumb from '../../assets/placeholder.png'
 
 const NavHeader = () => {
     const { user, logout } = useContext(AuthContext);
+
+    const [loggedUser, setLoggedUser] = useState('')
+
+    useEffect(() => {
+        fetch(`http://localhost:5001/users?users=${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setLoggedUser(data);
+            })
+    }, [user?.email])
+
 
     const handleSignOut = () => {
         logout()
@@ -14,7 +25,8 @@ const NavHeader = () => {
 
     const menuItems = <>
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
-        {user && <li className='text-blue-500'><Link to='/dashboard'>Dashbord</Link></li>}
+        {user && loggedUser.buyer && <li className='text-blue-500'><Link to='/dashboard/buyer'>Dashbord</Link></li>}
+        {user && loggedUser.seller && <li className='text-blue-500'><Link to='/dashboard/seller'>Dashbord</Link></li>}
 
 
     </>
