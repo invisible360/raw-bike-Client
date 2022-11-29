@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
 const CheckoutForm = ({ booking }) => {
@@ -39,7 +40,7 @@ const CheckoutForm = ({ booking }) => {
             return;
         }
 
-        const { error, paymentMethod } = await stripe.createPaymentMethod({
+        const { error } = await stripe.createPaymentMethod({
             type: 'card',
             card
         });
@@ -92,6 +93,7 @@ const CheckoutForm = ({ booking }) => {
                     console.log(data);
                     if (data.insertedId) {
                         setSuccess('Congrats! your payment completed');
+                        toast.success('Your Payment is Successful')
                         setTransactionId(paymentIntent.id);
                     }
                 })
