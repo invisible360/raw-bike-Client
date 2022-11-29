@@ -50,6 +50,7 @@ const CategoryDetailsPage = () => {
                         key={bike._id}
                         bike={bike}
                         setModal={setModal}
+                        buyerInfo={buyerInfo}
                         setBikeInfoForModal={setBikeInfoForModal}
                     ></Bike>)
                 }

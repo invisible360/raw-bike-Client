@@ -37,9 +37,9 @@ const Signup = () => {
                 updateUser(userInfo)
                     .then(() => {
                         saveSeller(data.name, data.email);
-                        toast.success(`Seller Created Successfully`);
+                        toast.success(`Seller Logged`);
                         navigate('/');
-                        toast.success(`Welcome ${data.name}`);
+                        
                     })
                     .catch(err => console.log(err));
             })
