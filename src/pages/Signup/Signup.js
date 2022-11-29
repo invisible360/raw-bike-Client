@@ -36,8 +36,9 @@ const Signup = () => {
                 updateUser(userInfo)
                     .then(() => {
                         saveBuyer(data.name, data.email);
-                        toast.success(`Welcome ${data.name}`);
+                        toast.success(`Buyer Created Successfully`);
                         navigate('/');
+                        toast.success(`Welcome ${data.name}`);
 
                     })
                     .catch(err => console.log(err));
@@ -66,7 +67,7 @@ const Signup = () => {
                 }
             })
     }
-    
+
 
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
@@ -83,6 +84,9 @@ const Signup = () => {
                         <input type="email" {...register("email", { required: true })} id="password" placeholder="Email" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
                         {errors.email && <span className='text-red-600'>This field is required</span>}
 
+                        <div className="flex justify-start text-md text-gray-600">
+                            <Link rel="noopener noreferrer" to="#">* It is recommended to use different email for same person as Buyer and Seller while Registration</Link>
+                        </div>
                     </div>
 
                     <div className="space-y-1 text-sm">

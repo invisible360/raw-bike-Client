@@ -9,20 +9,16 @@ import Loader from '../../shared/Loader';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const { googleLogin } = useContext(AuthContext);
+    const { googleLogin, login } = useContext(AuthContext);
 
-    const [signUpError, setSignUPError] = useState('');
+    const [loginError, setLoginError] = useState('');
+
 
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from.pathname || '/';
 
-    const onSubmit = data => {
-        console.log(data);
-        reset()
-    };
-
-    const { data: buyers = [], refetch, isLoading } = useQuery({
+    const { data: buyers = [], isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
             const res = await fetch(`http://localhost:5001/buyers`);
@@ -31,9 +27,42 @@ const Login = () => {
         }
     })
 
+    const handleLogin = data => {
+        // console.log(data);
+        setLoginError('');
+        login(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user.email);
+
+                fetch(`http://localhost:5001/users?users=${data.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.buyer) {
+                            toast.success("buyer logged");
+                            navigate(from, { replace: true });
+                            reset();
+
+                        }
+                        else {
+                            toast.success("seller logged");
+                            navigate(from, { replace: true });
+                            reset();
+                        }
+
+                    })
+            })
+            .catch(error => {
+                console.log(error)
+                setLoginError(error.message);
+                reset();
+            });
+    }
+
+
 
     const handleGoogleSignIn = () => {
-        setSignUPError('');
+        setLoginError('');
         googleLogin()
             .then(result => {
                 const user = result.user;
@@ -42,19 +71,17 @@ const Login = () => {
                 if (!alreadyBuyer) {
                     saveBuyer(user.displayName, user.email);
                     toast.success(`Welcome ${user.displayName}`);
-                    refetch ();
+
                 }
                 else {
                     toast.success(`Welcome ${user.displayName}`);
                     navigate(from, { replace: true });
-                    refetch ();
+
                 }
-
-
             })
             .then(error => {
                 console.error(error);
-                setSignUPError(error?.message);
+                setLoginError(error?.message);
             })
 
     }
@@ -71,7 +98,6 @@ const Login = () => {
             .then(res => res.json())
             .then(data => {
                 // setCreatedUserEmail(email);
-                // console.log(data);
                 if (data.acknowledged) {
                     navigate(from, { replace: true });
                     reset();
@@ -87,8 +113,8 @@ const Login = () => {
     return (
         <div className='flex justify-center items-center min-h-min my-10'>
             <div className="w-full max-w-md p-8 space-y-3 rounded-xl bg-gray-50 text-gray-800">
-                <h1 className="text-2xl font-bold text-center">Login {buyers.length}</h1>
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 ng-untouched ng-pristine ng-valid">
+                <h1 className="text-2xl font-bold text-center">Sign In</h1>
+                <form onSubmit={handleSubmit(handleLogin)} className="space-y-6 ng-untouched ng-pristine ng-valid">
                     <div className="space-y-1 text-sm">
                         <label className="block text-gray-600">Email</label>
                         <input type="email" {...register("email", { required: 'Email is Required' })} id="username" placeholder="Email" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
@@ -104,7 +130,7 @@ const Login = () => {
                     </div>
                     <button className=" btn btn-success block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign in</button>
 
-                    {signUpError && <p className='text-red-600'>{signUpError}</p>}
+                    {loginError && <p className='text-red-600'>{loginError}</p>}
 
                 </form>
                 <div className="flex items-center pt-4 space-x-1">
@@ -116,7 +142,7 @@ const Login = () => {
                     <button onClick={handleGoogleSignIn} aria-label="Log in with Google" className="text-2xl">
                         <FcGoogle></FcGoogle>
                     </button>
-                    
+
                 </div>
                 <p className="text-lg text-center sm:px-6 text-gray-600">Don't have an account?
                     <Link rel="noopener noreferrer" to="/signup" className=" underline text-gray-800">Sign up</Link>

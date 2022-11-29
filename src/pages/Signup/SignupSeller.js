@@ -16,23 +16,37 @@ const Signup = () => {
 
     const handleSignUp = (data) => {
         setSignUPError('');
+        /* const alreadySeller = sellers.find(seller => seller.email === data.email);
+        if (!alreadySeller) {
+            saveSeller(data.name, data.email, data.password);
+            toast.success(`Seller Created Successfully`);
+            navigate('/login');
+            // toast.success(`Welcome ${data.name}`);
+        }
+        else {
+            toast.error(`Seller Already Exist, Try Different Email`);
+            reset();
+        } */
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                toast.success('Seller Created Successfully.')
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
                     .then(() => {
                         saveSeller(data.name, data.email);
+                        toast.success(`Seller Created Successfully`);
+                        navigate('/');
+                        toast.success(`Welcome ${data.name}`);
                     })
                     .catch(err => console.log(err));
             })
             .catch(error => {
                 console.log(error)
-                setSignUPError(error.message)
+                setSignUPError(error?.message);
+                reset();
             });
     }
 
@@ -48,8 +62,9 @@ const Signup = () => {
             .then(res => res.json())
             .then(data => {
                 // setCreatedUserEmail(email);
-                reset();
-                navigate('/');
+                if (data.acknowledged) {
+                    navigate(0);
+                }
 
             })
     }
@@ -68,6 +83,9 @@ const Signup = () => {
                         <label className="block text-gray-600">Email</label>
                         <input type="email" {...register("email", { required: true })} id="password" placeholder="Email" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
                         {errors.email && <span className='text-red-600'>This field is required</span>}
+                        <div className="flex justify-start text-md text-gray-600">
+                            <Link rel="noopener noreferrer" to="#">* It is recommended to use different email for same person as Buyer and Seller while Registration</Link>
+                        </div>
 
                     </div>
 
