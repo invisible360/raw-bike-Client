@@ -2,9 +2,12 @@ import React from 'react';
 import { GoVerified } from "react-icons/go";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 import BookingModal from '../BookingModal/BookingModal';
+import EmptyModal from '../BookingModal/EmptyModal';
 
-const Bike = ({ bike }) => {
-    console.log(bike);
+const Bike = ({ bike, buyerInfo, sellerInfo }) => {
+
+
+
     return (
         <div className=''>
             <div className="flex flex-col lg:flex-row max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-50 text-gray-800">
@@ -35,15 +38,29 @@ const Bike = ({ bike }) => {
                                     <span type="button" className="flex items-center px-2 py-1 pl-0 space-x-1">Posted Date:</span>
                                     <span type="button" className="flex items-center px-2 space-x-1">Used: {bike.yearsOfUsed} Years</span>
                                 </div>
-                                <div className='flex flex-col lg:flex-row lg:justify-between'>
+                                <div className='flex flex-col lg:justify-between'>
                                     <div className='flex items-center'>
                                         <span>Seller: {bike.sellerName}</span>
                                         <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
                                     </div>
-                                    
-                                    <label type="button" htmlFor="booking-modal" className="btn btn-success px-6 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
 
-                                    <BookingModal></BookingModal>
+                                    <label type="button" htmlFor="booking-modal" className="my-2 w-1/2 btn btn-success px-2 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
+
+                                    {
+                                        Object.keys(sellerInfo).length > 0 ?
+                                            <>
+                                                <EmptyModal></EmptyModal>
+                                            </>
+                                            :
+                                            <>
+                                                <BookingModal
+                                                    bike={bike}
+                                                    buyerInfo={buyerInfo}
+                                                ></BookingModal>
+                                            </>
+                                    }
+
+
                                 </div>
                             </div>
                         </div>

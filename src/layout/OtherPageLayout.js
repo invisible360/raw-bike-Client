@@ -8,7 +8,7 @@ const OtherPageLayout = () => {
         <div className='min-h-screen'>
             <NavHeader></NavHeader>
             <Outlet></Outlet>
-            <div className='absolute bottom-0 right-0 left-0 min '>
+            <div className='absolute bottom-0 right-0 left-0  '>
                 <Footer></Footer>
             </div>
         </div>
