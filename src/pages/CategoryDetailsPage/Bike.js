@@ -2,7 +2,7 @@ import React from 'react';
 import { GoVerified } from "react-icons/go";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 
-const Bike = ({ bike, setBikeInfoForModal }) => {
+const Bike = ({ bike, setBikeInfoForModal, setModal }) => {
     // console.log(bike);
 
 
@@ -43,7 +43,10 @@ const Bike = ({ bike, setBikeInfoForModal }) => {
                                         <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
                                     </div>
 
-                                    <label type="button" onClick={()=> setBikeInfoForModal (bike)}  htmlFor="booking-modal" className="my-2 w-1/2 btn btn-success px-2 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
+                                    <label type="button"  onClick={() => {
+                                        setBikeInfoForModal(bike);
+                                        setModal (true)
+                                    }} htmlFor="booking-modal" className="my-2 w-1/2 btn btn-success px-2 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
 
                                 </div>
                             </div>

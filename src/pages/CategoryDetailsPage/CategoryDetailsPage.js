@@ -10,6 +10,7 @@ const CategoryDetailsPage = () => {
     const catBikes = useLoaderData();
 
     const [bikeInfoForModal, setBikeInfoForModal] = useState(null);
+    const [modal, setModal] = useState(false)
     const [buyerInfo, setBuyerInfo] = useState('');
     const [sellerInfo, setsSellerInfo] = useState({});
     // const [userName, setUsername] = useState('');
@@ -48,6 +49,7 @@ const CategoryDetailsPage = () => {
                     catBikes.map(bike => <Bike
                         key={bike._id}
                         bike={bike}
+                        setModal={setModal}
                         setBikeInfoForModal={setBikeInfoForModal}
                     ></Bike>)
                 }
@@ -59,10 +61,14 @@ const CategoryDetailsPage = () => {
                         </>
                         :
                         <>
-                            <BookingModal
-                                bikeInfoForModal={bikeInfoForModal}
-                                buyerInfo={buyerInfo}
-                            ></BookingModal>
+                            {
+                                modal &&
+                                <BookingModal
+                                    bikeInfoForModal={bikeInfoForModal}
+                                    setModal={setModal}
+                                    buyerInfo={buyerInfo}
+                                ></BookingModal>
+                            }
                         </>
                 }
             </div>
