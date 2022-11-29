@@ -16,7 +16,7 @@ const Payment = () => {
     //     return <Loading></Loading>
     // }
     return (
-        <div className='lg:col-span-10 '>
+        <div>
 
             <section>
                 <div className="dark:bg-violet-400 border-2">

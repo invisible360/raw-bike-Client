@@ -44,7 +44,7 @@ const DashboardBuyerMyOrders = () => {
     }
 
     return (
-        <div className='lg:col-span-10 '>
+        
             <div className="lg:divide-x lg:divide-gray-700 container p-2 mx-auto sm:p-4 dark:text-gray-100">
                 <h2 className="mb-4 text-2xl font-semibold leading-tight text-center my-5">My Orders</h2>
                 <div className="overflow-x-auto">
@@ -111,7 +111,7 @@ const DashboardBuyerMyOrders = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        
 
     );
 };

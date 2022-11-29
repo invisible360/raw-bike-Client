@@ -52,15 +52,15 @@ const DashboardLayout = () => {
 
                                 {
                                     loggedUser.seller && <>
-                                        <Link to="/dashboard/sellers/myProducts" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                        <Link to="/dashboard/seller/myProducts" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
                                             <span className='text-lg'><FaShoppingCart></FaShoppingCart></span>
                                             <span>My Products</span>
                                         </Link>
-                                        <Link to="/dashboard/sellers/addProducts" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                        <Link to="/dashboard/seller/addProducts" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
                                             <span className='text-lg'><FaShoppingCart></FaShoppingCart></span>
                                             <span>Add a Product</span>
                                         </Link>
-                                        <Link to="/dashboard/sellers/myBuyers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                        <Link to="/dashboard/seller/myBuyers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
                                             <span className='text-lg'><FaShoppingCart></FaShoppingCart></span>
                                             <span>My Buyer</span>
                                         </Link>
@@ -72,7 +72,9 @@ const DashboardLayout = () => {
                         <ul className="pt-4 pb-2 space-y-1 text-sm"></ul>
                     </div>
                 </div>
-                <Outlet></Outlet>
+                <div className='lg:col-span-10 '>
+                    <Outlet></Outlet>
+                </div>
             </div>
         </div>
 

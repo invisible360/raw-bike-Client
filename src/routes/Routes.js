@@ -6,6 +6,7 @@ import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPag
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
 import DashboardSellerMyProducts from "../pages/Dashboard/DashboardSellerMyProducts";
 import Payment from "../pages/Dashboard/Payment/Payment";
+import SellerAddProduct from "../pages/Dashboard/SellerAddProduct";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
@@ -75,7 +76,15 @@ const routes = createBrowserRouter([
         children: [
             {
                 path: '/dashboard/seller',
+                element: <SellerAddProduct></SellerAddProduct>
+            },
+            {
+                path: '/dashboard/seller/myProducts',
                 element: <DashboardSellerMyProducts></DashboardSellerMyProducts>
+            },
+            {
+                path: '/dashboard/seller/addProducts',
+                element: <SellerAddProduct></SellerAddProduct>
             }
         ]
     }
