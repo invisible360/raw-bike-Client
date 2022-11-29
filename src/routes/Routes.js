@@ -1,7 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import DashboardLayout from "../layout/DashboardLayout";
 import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
+import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
@@ -43,6 +45,22 @@ const routes = createBrowserRouter([
                 path: '/categoryDetails/:catName',
                 element: <PrivateRoute><CategoryDetailsPage></CategoryDetailsPage></PrivateRoute>,
                 loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
+            }
+        ]
+    },
+    {
+        path: '/dashboard',
+        element: <DashboardLayout></DashboardLayout>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
+                loader: () => fetch(`http://localhost:5001/bookings`)
+            },
+            {
+                path: '/dashboard/myOrders',
+                element: <PrivateRoute><DashboardBuyerMyOrders></DashboardBuyerMyOrders></PrivateRoute>,
+                loader: () => fetch(`http://localhost:5001/bookings`)
             }
         ]
     }

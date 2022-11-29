@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 
 const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
@@ -8,6 +9,7 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
     // const date = format(selectedDate, 'PP');
     const { user } = useContext(AuthContext);
     // console.log(bikeInfoForModal);
+    const navigate = useNavigate();
 
     const handleBooking = event => {
         event.preventDefault();
@@ -23,7 +25,8 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
             productName: bikeInfoForModal?.name,
             price: bikeInfoForModal?.resalePrice,
             phone,
-            location
+            location,
+            image: bikeInfoForModal?.image
 
         }
 
@@ -45,7 +48,8 @@ const BookingModal = ({ bikeInfoForModal, buyerInfo, setModal }) => {
                     // setTreatment(null);
                     toast.success('Booking confirmed');
                     form.reset();
-                    setModal (false);
+                    setModal(false);
+                    navigate ('/dashboard/myOrders')
                     // refetch();
                 }
                 else {

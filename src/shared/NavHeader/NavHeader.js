@@ -14,7 +14,7 @@ const NavHeader = () => {
 
     const menuItems = <>
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
-        {user && <li className='text-blue-500'><Link to='/dasboard'>Dashbord</Link></li>}
+        {user && <li className='text-blue-500'><Link to='/dashboard'>Dashbord</Link></li>}
 
 
     </>
