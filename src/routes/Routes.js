@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
+import Blog from "../pages/Blog";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
 import DashboardSellerMyProducts from "../pages/Dashboard/DashboardSellerMyProducts";
@@ -11,12 +12,14 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import SignupSeller from "../pages/Signup/SignupSeller"
+import DisplayError from "../shared/DisplayError";
 import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
     {
         path: '/',
         element: <HomeLayout></HomeLayout>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/',
@@ -43,6 +46,7 @@ const routes = createBrowserRouter([
     {
         path: '/categoryDetails/:catName',
         element: <OtherPageLayout></OtherPageLayout>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/categoryDetails/:catName',
@@ -54,6 +58,7 @@ const routes = createBrowserRouter([
     {
         path: '/dashboard/buyer',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/dashboard/buyer',
@@ -73,10 +78,11 @@ const routes = createBrowserRouter([
     {
         path: '/dashboard/seller',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/dashboard/seller',
-                element: <SellerAddProduct></SellerAddProduct>
+                element: <DashboardSellerMyProducts></DashboardSellerMyProducts>
             },
             {
                 path: '/dashboard/seller/myProducts',
@@ -87,6 +93,10 @@ const routes = createBrowserRouter([
                 element: <SellerAddProduct></SellerAddProduct>
             }
         ]
+    },
+    {
+        path: '/blog',
+        element: <Blog></Blog>
     }
 ])
 

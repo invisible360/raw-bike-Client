@@ -27,7 +27,7 @@ const NavHeader = () => {
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
         {user && loggedUser.buyer && <li className='text-blue-500'><Link to='/dashboard/buyer'>Dashbord</Link></li>}
         {user && loggedUser.seller && <li className='text-blue-500'><Link to='/dashboard/seller'>Dashbord</Link></li>}
-
+        <li className='text-blue-500'><Link to="/blog">Blog</Link></li>
 
     </>
 

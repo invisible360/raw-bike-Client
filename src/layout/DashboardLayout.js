@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, Outlet } from 'react-router-dom'; import { FaShoppingCart } from "react-icons/fa";
 import NavHeader from '../shared/NavHeader/NavHeader';
 import { AuthContext } from '../context/AuthContext/AuthProvider';
+import { AiFillFileAdd } from "react-icons/ai";
+import { BsPeopleFill } from "react-icons/bs";
 const DashboardLayout = () => {
 
     const { user } = useContext(AuthContext);
@@ -57,11 +59,11 @@ const DashboardLayout = () => {
                                             <span>My Products</span>
                                         </Link>
                                         <Link to="/dashboard/seller/addProducts" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
-                                            <span className='text-lg'><FaShoppingCart></FaShoppingCart></span>
+                                            <span className='text-lg'><AiFillFileAdd></AiFillFileAdd></span>
                                             <span>Add a Product</span>
                                         </Link>
                                         <Link to="/dashboard/seller/myBuyers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
-                                            <span className='text-lg'><FaShoppingCart></FaShoppingCart></span>
+                                            <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
                                             <span>My Buyer</span>
                                         </Link>
                                     </>

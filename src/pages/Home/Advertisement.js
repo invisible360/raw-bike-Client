@@ -1,16 +1,18 @@
 import React from 'react';
 
-const Advertisement = () => {
+const Advertisement = ({ advertise }) => {
+    const { image, name, location, condition, category, price } = advertise
     return (
         <div className='mt-10'>
             <div className="card w-96 bg-base-100 shadow-xl">
-                <figure><img src="https://placeimg.com/400/225/arch" alt="Shoes" /></figure>
+                <figure><img className='h-96' src={image} alt="Shoes" /></figure>
                 <div className="card-body">
-                    <h2 className="card-title">Shoes!</h2>
-                    <p>If a dog chews shoes whose shoes does he choose?</p>
-                    <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Buy Now</button>
-                    </div>
+                    <h2 className="card-title">{name} <span className='animate-bounce text-orange-500'>in Live</span></h2>
+                    <p>Price: ${price}</p>
+                    <p>Location: {location}</p>
+                    <p>Condition: {condition}</p>
+                    <p>Category: {category}</p>
+
                 </div>
             </div>
         </div>
