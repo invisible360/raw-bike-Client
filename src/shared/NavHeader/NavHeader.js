@@ -6,14 +6,30 @@ import noPhotoThumb from '../../assets/placeholder.png'
 const NavHeader = () => {
     const { user, logout } = useContext(AuthContext);
 
-    const [loggedUser, setLoggedUser] = useState('')
+    const [loggedUser, setLoggedUser] = useState('');
+    const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5001/users?users=${user?.email}`)
+        fetch(`http://localhost:5001/allUsers`)
             .then(res => res.json())
             .then(data => {
-                setLoggedUser(data);
+                // console.log(data);
+                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
+                if (admin) {
+                    setAdmin(true);
+                }
+
+                else {
+
+                    fetch(`http://localhost:5001/users?users=${user?.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            setLoggedUser(data);
+                        })
+
+                }
             })
+
     }, [user?.email])
 
 
@@ -27,6 +43,7 @@ const NavHeader = () => {
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
         {user && loggedUser.buyer && <li className='text-blue-500'><Link to='/dashboard/buyer'>Dashbord</Link></li>}
         {user && loggedUser.seller && <li className='text-blue-500'><Link to='/dashboard/seller'>Dashbord</Link></li>}
+        {user && admin && <li className='text-blue-500'><Link to='/dashboard/admin'>Dashbord</Link></li>}
         <li className='text-blue-500'><Link to="/blog">Blog</Link></li>
 
     </>

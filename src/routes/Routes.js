@@ -4,11 +4,13 @@ import HomeLayout from "../layout/HomeLayout";
 import OtherPageLayout from "../layout/OtherPageLayout";
 import Blog from "../pages/Blog";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
+import AdminDashboardAllUsers from "../pages/Dashboard/AdminDashboardAllUsers";
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
 import DashboardSellerMyProducts from "../pages/Dashboard/DashboardSellerMyProducts";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import SellerAddProduct from "../pages/Dashboard/SellerAddProduct";
 import Home from "../pages/Home/Home";
+import AdminLogin from "../pages/Login/AdminLogin";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import SignupSeller from "../pages/Signup/SignupSeller"
@@ -97,6 +99,25 @@ const routes = createBrowserRouter([
     {
         path: '/blog',
         element: <Blog></Blog>
+    },
+    {
+        path: '/adminLogin',
+        element: <AdminLogin></AdminLogin>
+    },
+    {
+        path: '/dashboard/admin',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
+        children: [
+            {
+                path: '/dashboard/admin',
+                element: <AdminDashboardAllUsers></AdminDashboardAllUsers>
+            },
+            {
+                path: '/dashboard/admin/allBuyers',
+                element: <AdminDashboardAllUsers></AdminDashboardAllUsers>
+            }
+        ]
     }
 ])
 

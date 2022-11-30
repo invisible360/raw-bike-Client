@@ -19,6 +19,34 @@ const CategoryDetailsPage = () => {
 
     const { user } = useContext(AuthContext);
 
+    
+    const [loggedUser, setLoggedUser] = useState('');
+    const [admin, setAdmin] = useState(false);
+
+    useEffect(() => {
+        fetch(`http://localhost:5001/allUsers`)
+            .then(res => res.json())
+            .then(data => {
+                // console.log(data);
+                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
+                if (admin) {
+                    setAdmin(true);
+                }
+
+                else {
+
+                    fetch(`http://localhost:5001/users?users=${user?.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            setLoggedUser(data);
+                        })
+
+                }
+            })
+
+    }, [user?.email])
+
+
     useEffect(() => {
         fetch(`http://localhost:5001/users?users=${user.email}`)
             .then(res => res.json())
@@ -56,7 +84,7 @@ const CategoryDetailsPage = () => {
                 }
 
                 {
-                    Object.keys(sellerInfo).length > 0 ?
+                    Object.keys(sellerInfo).length > 0 || admin ?
                         <>
                             <EmptyModal></EmptyModal>
                         </>

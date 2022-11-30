@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
 import Loader from '../../shared/Loader';
 import Advertisement from './Advertisement';
@@ -27,9 +27,12 @@ const Advertisements = () => {
 
     return (
         <div className='mt-10'>
-            <h1 className="text-3xl text-center font-bold">Advertised Products</h1>
+            {
+                advertisements.length ? <h1 className="text-3xl text-center font-bold">Advertised Products</h1> : ''
+            }
             <div className='grid grid-cols-1 lg:grid-cols-3 gap-5 w-[95%] lg:w-full mx-auto'>
                 {
+
                     advertisements.map(advertise => <Advertisement
                         key={advertise._id}
                         advertise={advertise}

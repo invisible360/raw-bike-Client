@@ -4,18 +4,36 @@ import NavHeader from '../shared/NavHeader/NavHeader';
 import { AuthContext } from '../context/AuthContext/AuthProvider';
 import { AiFillFileAdd } from "react-icons/ai";
 import { BsPeopleFill } from "react-icons/bs";
+
+
 const DashboardLayout = () => {
 
     const { user } = useContext(AuthContext);
-    const [loggedUser, setLoggedUser] = useState('')
+    const [loggedUser, setLoggedUser] = useState('');
+    const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5001/users?users=${user?.email}`)
+        fetch(`http://localhost:5001/allUsers`)
             .then(res => res.json())
             .then(data => {
-                setLoggedUser(data);
+                // console.log(data);
+                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
+                if (admin) {
+                    setAdmin(true);
+                }
+
+                else {
+
+                    fetch(`http://localhost:5001/users?users=${user?.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            setLoggedUser(data);
+                        })
+
+                }
             })
-    }, [user.email])
+
+    }, [user?.email])
 
 
     return (
@@ -35,6 +53,9 @@ const DashboardLayout = () => {
                                     }
                                     {
                                         loggedUser.seller && "Seller"
+                                    }
+                                    {
+                                        admin && "Admin"
                                     }
                                 </span>
                             </span>
@@ -66,6 +87,20 @@ const DashboardLayout = () => {
                                             <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
                                             <span>My Buyer</span>
                                         </Link>
+                                    </>
+                                }
+
+{
+                                    admin && <>
+                                        <Link to="/dashboard/admin/allBuyers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                            <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
+                                            <span>All Buyers</span>
+                                        </Link>
+                                        <Link to="/dashboard/admin/allSellers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                            <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
+                                            <span>All Sellers</span>
+                                        </Link>
+                                        
                                     </>
                                 }
 

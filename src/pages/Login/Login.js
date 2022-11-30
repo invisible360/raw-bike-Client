@@ -18,6 +18,17 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from.pathname || '/';
 
+    const { data: allUsers = [] } = useQuery({
+        queryKey: ['allUsers'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5001/allUsers`);
+            const data = await res.json();
+            // console.log(data);
+            return data;
+        }
+    })
+
+
     const { data: buyers = [], isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
@@ -35,22 +46,32 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
 
-                fetch(`http://localhost:5001/users?users=${data.email}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.buyer) {
-                            toast.success("buyer logged");
-                            navigate(from, { replace: true });
-                            reset();
+                const admin = allUsers.find(ad => ad.email === user?.email && ad.role === 'admin')
+                if (admin) {
+                    toast.success('Admin Logged In');
+                    navigate(from, { replace: true });
+                    reset();
+                }
 
-                        }
-                        else {
-                            toast.success("seller logged");
-                            navigate(from, { replace: true });
-                            reset();
-                        }
+                else {
+                    fetch(`http://localhost:5001/users?users=${data.email}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.buyer) {
+                                toast.success("buyer logged");
+                                navigate(from, { replace: true });
+                                reset();
 
-                    })
+                            }
+                            else {
+                                toast.success("seller logged");
+                                navigate(from, { replace: true });
+                                reset();
+                            }
+
+                        })
+
+                }
             })
             .catch(error => {
                 console.log(error)
@@ -70,11 +91,11 @@ const Login = () => {
                 const alreadyBuyer = buyers.find(buyer => buyer.email === user.email)
                 if (!alreadyBuyer) {
                     saveBuyer(user.displayName, user.email);
-                    toast.success(`Welcome ${user.displayName}`);
+                    toast.success(`buyer Logged`);
 
                 }
                 else {
-                    toast.success(`Welcome ${user.displayName}`);
+                    toast.success(`buyer Logged`);
                     navigate(from, { replace: true });
 
                 }
@@ -97,7 +118,7 @@ const Login = () => {
         })
             .then(res => res.json())
             .then(data => {
-                // setCreatedUserEmail(email);
+
                 if (data.acknowledged) {
                     navigate(from, { replace: true });
                     reset();
@@ -124,11 +145,12 @@ const Login = () => {
                         <label className="block text-gray-600">Password</label>
                         <input type="password" {...register("password", { required: true })} id="password" placeholder="Password" className="w-full px-4 py-3 rounded-md border-gray-300 border bg-gray-50 text-gray-800 focus:border-cyan-600" />
                         {errors.password && <span className='text-red-600'>This field is required</span>}
-                        <div className="flex justify-end text-md text-gray-600">
-                            <Link rel="noopener noreferrer" to="#">Forgot Password?</Link>
-                        </div>
+
                     </div>
                     <button className=" btn btn-success block w-full p-3 text-center rounded-sm text-gray-50 bg-cyan-600">Sign in</button>
+                    {/* <div className="flex justify-end text-md text-gray-600">
+                        <Link className='btn-link' rel="noopener noreferrer" to="/adminLogin">Admin login</Link>
+                    </div> */}
 
                     {loginError && <p className='text-red-600'>{loginError}</p>}
 

@@ -92,8 +92,6 @@ const DashboardSellerMyProducts = () => {
         return <Loader></Loader>
     }
 
-
-
     return (
         <div className='lg:col-span-10 '>
             <div className="l container p-2 mx-auto sm:p-4 dark:text-gray-100">
@@ -121,7 +119,7 @@ const DashboardSellerMyProducts = () => {
                                             </div>
                                         </div>
                                         <div className="card-actions justify-between my-2">
-                                            <button disabled={product.status && true} onClick={() => handlAdvertiseProduct(product)} className="btn btn-primary">{product.status ? 'Advertised' : 'Advertise'}</button>
+                                            <button disabled={product.status && true} onClick={() => handlAdvertiseProduct(product)} className="btn btn-primary">{product.status ? 'On Live' : 'Advertise'}</button>
                                             <button onClick={() => deleteBooking(product._id)} className="btn btn-error btn-circle">X</button>
                                         </div>
                                     </div>
