@@ -12,7 +12,7 @@ const DashboardSellerMyProducts = () => {
     const { data: products = [], isLoading, refetch } = useQuery({
         queryKey: ['products', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/products?email=${user?.email}`);
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/products?email=${user?.email}`);
             const data = await res.json();
 
             return data;
@@ -42,7 +42,7 @@ const DashboardSellerMyProducts = () => {
             date: format(new Date(), "PPpp")
         }
 
-        fetch('http://localhost:5001/advertiseProducts', {
+        fetch('https://raw-bike-server-invisible360.vercel.app/advertiseProducts', {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -54,7 +54,7 @@ const DashboardSellerMyProducts = () => {
                 console.log(result);
                 if (result.acknowledged) {
                     toast.success('Advertise Posted Successfully');
-                    fetch(`http://localhost:5001/products/${product._id}`, {
+                    fetch(`https://raw-bike-server-invisible360.vercel.app/products/${product._id}`, {
                         method: "PUT",
                         headers: {
                             "content-type": "application/json"
@@ -75,7 +75,7 @@ const DashboardSellerMyProducts = () => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
 
         if (permission) {
-            fetch(`http://localhost:5001/productsAndadvertise/${id}`, {
+            fetch(`https://raw-bike-server-invisible360.vercel.app/productsAndadvertise/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

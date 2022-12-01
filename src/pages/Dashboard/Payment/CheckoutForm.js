@@ -16,7 +16,7 @@ const CheckoutForm = ({ booking }) => {
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5001/create-payment-intent", {
+        fetch("https://raw-bike-server-invisible360.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -80,7 +80,7 @@ const CheckoutForm = ({ booking }) => {
                 buyerEmail,
                 bookingId: _id
             }
-            fetch('http://localhost:5001/payments', {
+            fetch('https://raw-bike-server-invisible360.vercel.app/payments', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',

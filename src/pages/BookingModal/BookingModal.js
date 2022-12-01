@@ -31,7 +31,7 @@ const BookingModal = ({ buyerInfo, bikeInfoForModal, setModal }) => {
 
         }
 
-        fetch('http://localhost:5001/bookings', {
+        fetch('https://raw-bike-server-invisible360.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

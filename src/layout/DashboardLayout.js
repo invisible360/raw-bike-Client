@@ -13,7 +13,7 @@ const DashboardLayout = () => {
     // const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5001/users?users=${user?.email}`)
+        fetch(`https://raw-bike-server-invisible360.vercel.app/users?users=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setLoggedUser(data);
@@ -23,7 +23,7 @@ const DashboardLayout = () => {
     const [admin, setAdmin] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:5001/admin`)
+        fetch(`https://raw-bike-server-invisible360.vercel.app/admin`)
             .then(res => res.json())
             .then(data => {
                 setAdmin(data[0].email);

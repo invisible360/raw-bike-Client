@@ -25,7 +25,7 @@ const ProductCategories = () => {
     const { data: bikeCategories = [], refetch } = useQuery({
         queryKey: ['bikeCategories'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/bikeCategories`)
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/bikeCategories`)
             const data = res.json()
             console.log(data);
             return data

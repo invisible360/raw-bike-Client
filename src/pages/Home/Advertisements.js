@@ -12,7 +12,7 @@ const Advertisements = () => {
     const { data: advertisements = [], isLoading } = useQuery({
         queryKey: ['advertisements', user?.email],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/advertisements/${user?.email}`);
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/advertisements/${user?.email}`);
             const data = await res.json();
             // console.log(data);
             return data;

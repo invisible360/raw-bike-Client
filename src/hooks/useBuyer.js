@@ -5,7 +5,7 @@ const useBuyer = (email) => {
     const [isBuyerLoading, setIsBuyerLoading] = useState(true);
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5001/buyers/${email}`)
+            fetch(`https://raw-bike-server-invisible360.vercel.app/buyers/${email}`)
                 .then(res => res.json())
                 .then(data => {
                     // console.log(data);

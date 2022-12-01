@@ -5,7 +5,7 @@ const useAdmin = (email) => {
     const [isAdminLoading, setIsAdminLoading] = useState(true);
     useEffect(() => {
         if (email) {
-            fetch(`http://localhost:5001/admin/${email}`)
+            fetch(`https://raw-bike-server-invisible360.vercel.app/admin/${email}`)
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);

@@ -12,7 +12,7 @@ const AdminDashboardAllSellers = () => {
     const { data: sellers = [], isLoading, refetch } = useQuery({
         queryKey: ['sellers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/sellers`);
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/sellers`);
             const data = await res.json();
             return data;
         }
@@ -23,14 +23,14 @@ const AdminDashboardAllSellers = () => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
         // console.log(id);
         if (permission) {
-            fetch(`http://localhost:5001/seller/${id}`, {
+            fetch(`https://raw-bike-server-invisible360.vercel.app/seller/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
                     if (data.acknowledged) {
-                        fetch(`http://localhost:5001/products?email=${email}`, {
+                        fetch(`https://raw-bike-server-invisible360.vercel.app/products?email=${email}`, {
                             method: 'DELETE'
                         })
                             .then(res => res.json())
@@ -52,7 +52,7 @@ const AdminDashboardAllSellers = () => {
 
 
     const handleVerifySeller = id => {
-        fetch(`http://localhost:5001/sellers/${id}`, {
+        fetch(`https://raw-bike-server-invisible360.vercel.app/sellers/${id}`, {
             method: "PUT",
             headers: {
                 "content-type": "application/json"

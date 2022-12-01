@@ -40,7 +40,7 @@ const AdminSignUp = () => {
 
     const saveAdmin = (name, email) => {
         const buyer = { name, email };
-        fetch('http://localhost:5001/admin', {
+        fetch('https://raw-bike-server-invisible360.vercel.app/admin', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

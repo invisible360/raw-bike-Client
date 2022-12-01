@@ -18,7 +18,7 @@ const SellerAddProduct = () => {
     const [loggedUser, setLoggedUser] = useState('')
 
     useEffect(() => {
-        fetch(`http://localhost:5001/users?users=${user?.email}`)
+        fetch(`https://raw-bike-server-invisible360.vercel.app/users?users=${user?.email}`)
             .then(res => res.json())
             .then(data => {
                 setLoggedUser(data);
@@ -48,7 +48,7 @@ const SellerAddProduct = () => {
     const { data: bikeCategories = [] } = useQuery({
         queryKey: ['bikeCategories'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/bikeCategories`)
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/bikeCategories`)
             const data = res.json()
             console.log(data);
             return data
@@ -89,7 +89,7 @@ const SellerAddProduct = () => {
                     }
 
                     // save product information to the database
-                    fetch('http://localhost:5001/products', {
+                    fetch('https://raw-bike-server-invisible360.vercel.app/products', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',

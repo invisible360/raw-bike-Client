@@ -52,7 +52,7 @@ const Signup = () => {
 
     const saveBuyer = (name, email) => {
         const buyer = { name, email };
-        fetch('http://localhost:5001/buyers', {
+        fetch('https://raw-bike-server-invisible360.vercel.app/buyers', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

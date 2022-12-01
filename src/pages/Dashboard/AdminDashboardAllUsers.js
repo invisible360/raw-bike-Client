@@ -9,7 +9,7 @@ const AdminDashboardAllUsers = () => {
     const { data: buyers = [], isLoading, refetch } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/buyers`);
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/buyers`);
             const data = await res.json();
             return data;
         }
@@ -19,14 +19,14 @@ const AdminDashboardAllUsers = () => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
         // console.log(id);
         if (permission) {
-            fetch(`http://localhost:5001/buyer/${id}`, {
+            fetch(`https://raw-bike-server-invisible360.vercel.app/buyer/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
                     if (data.acknowledged) {
-                        fetch(`http://localhost:5001/bookings?email=${email}`, {
+                        fetch(`https://raw-bike-server-invisible360.vercel.app/bookings?email=${email}`, {
                             method: 'DELETE'
                         })
                             .then(res => res.json())

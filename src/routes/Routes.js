@@ -49,7 +49,7 @@ const routes = createBrowserRouter([
     {
         path: '/categoryDetails/:id',
         element: <PrivateRoute><CategoryDetailsPage></CategoryDetailsPage></PrivateRoute>,
-        loader: ({ params }) => fetch(`http://localhost:5001/catProducts/${params.id}`),
+        loader: ({ params }) => fetch(`https://raw-bike-server-invisible360.vercel.app/catProducts/${params.id}`),
         // errorElement: <DisplayError></DisplayError>
 
     },
@@ -69,7 +69,7 @@ const routes = createBrowserRouter([
             {
                 path: '/dashboard/buyer/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({ params }) => fetch(`http://localhost:5001/bookings/${params.id}`)
+                loader: ({ params }) => fetch(`https://raw-bike-server-invisible360.vercel.app/bookings/${params.id}`)
             }
         ]
     },

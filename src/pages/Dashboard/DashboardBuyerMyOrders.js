@@ -12,7 +12,7 @@ const DashboardBuyerMyOrders = () => {
     const { data: bookings = [], isLoading, refetch } = useQuery({
         queryKey: ['bookings'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/bookings?email=${user?.email}`);
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/bookings?email=${user?.email}`);
             const data = await res.json();
             return data;
         }
@@ -22,7 +22,7 @@ const DashboardBuyerMyOrders = () => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
         // console.log(id);
         if (permission) {
-            fetch(`http://localhost:5001/bookings/${id}`, {
+            fetch(`https://raw-bike-server-invisible360.vercel.app/bookings/${id}`, {
                 method: 'DELETE'
             })
                 .then(res => res.json())

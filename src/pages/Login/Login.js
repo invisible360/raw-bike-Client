@@ -21,7 +21,7 @@ const Login = () => {
     const [admin, setAdmin] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:5001/admin`)
+        fetch(`https://raw-bike-server-invisible360.vercel.app/admin`)
             .then(res => res.json())
             .then(data => {
                 setAdmin(data[0].email);
@@ -33,7 +33,7 @@ const Login = () => {
     const { data: buyers = [], isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/buyers`)
+            const res = await fetch(`https://raw-bike-server-invisible360.vercel.app/buyers`)
             const data = await res.json();
             return data;
         }
@@ -47,7 +47,7 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
 
-                fetch(`http://localhost:5001/users?users=${data.email}`)
+                fetch(`https://raw-bike-server-invisible360.vercel.app/users?users=${data.email}`)
                     .then(res => res.json())
                     .then(data => {
                         if (admin === user?.email) {
@@ -116,7 +116,7 @@ const Login = () => {
 
     const saveBuyer = (name, email) => {
         const buyer = { name, email };
-        fetch('http://localhost:5001/buyers', {
+        fetch('https://raw-bike-server-invisible360.vercel.app/buyers', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
