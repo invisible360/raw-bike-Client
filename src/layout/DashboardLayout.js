@@ -97,6 +97,10 @@ const DashboardLayout = () => {
                                             <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
                                             <span>All Sellers</span>
                                         </Link>
+                                        <Link to="/dashboard/admin/reportedItems" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
+                                            <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
+                                            <span>Reported Items</span>
+                                        </Link>
 
                                     </>
                                 }

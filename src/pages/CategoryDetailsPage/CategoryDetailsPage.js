@@ -10,7 +10,6 @@ import Bike from './Bike';
 
 const CategoryDetailsPage = () => {
 
-    // http://localhost:5001/bikes?name=${params.catName}
 
     const catProducts = useLoaderData();
     // console.log(catProducts);
