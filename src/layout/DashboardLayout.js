@@ -10,29 +10,26 @@ const DashboardLayout = () => {
 
     const { user } = useContext(AuthContext);
     const [loggedUser, setLoggedUser] = useState('');
-    const [admin, setAdmin] = useState(false);
+    // const [admin, setAdmin] = useState(false);
 
     useEffect(() => {
-        fetch(`http://localhost:5001/allUsers`)
+        fetch(`http://localhost:5001/users?users=${user?.email}`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
-                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
-                if (admin) {
-                    setAdmin(true);
-                }
-
-                else {
-
-                    fetch(`http://localhost:5001/users?users=${user?.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            setLoggedUser(data);
-                        })
-
-                }
+                setLoggedUser(data);
             })
+    }, [user?.email])
 
+    const [admin, setAdmin] = useState('');
+
+    useEffect(() => {
+        fetch(`http://localhost:5001/admin`)
+            .then(res => res.json())
+            .then(data => {
+                setAdmin(data[0].email);
+                // console.log(data[0].email);
+                // console.log(user?.email);
+            })
     }, [user?.email])
 
 
@@ -55,7 +52,7 @@ const DashboardLayout = () => {
                                         loggedUser.seller && "Seller"
                                     }
                                     {
-                                        admin && "Admin"
+                                        admin === user?.email && "Admin"
                                     }
                                 </span>
                             </span>
@@ -90,8 +87,8 @@ const DashboardLayout = () => {
                                     </>
                                 }
 
-{
-                                    admin && <>
+                                {
+                                    admin === user?.email && <>
                                         <Link to="/dashboard/admin/allBuyers" className="hover:text-warning flex items-center p-2 space-x-3 rounded-md">
                                             <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
                                             <span>All Buyers</span>
@@ -100,7 +97,7 @@ const DashboardLayout = () => {
                                             <span className='text-lg'><BsPeopleFill></BsPeopleFill></span>
                                             <span>All Sellers</span>
                                         </Link>
-                                        
+
                                     </>
                                 }
 

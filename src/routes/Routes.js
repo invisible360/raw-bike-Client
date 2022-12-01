@@ -1,20 +1,21 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../layout/DashboardLayout";
 import HomeLayout from "../layout/HomeLayout";
-import OtherPageLayout from "../layout/OtherPageLayout";
 import Blog from "../pages/Blog";
 import CategoryDetailsPage from "../pages/CategoryDetailsPage/CategoryDetailsPage";
+import AdminDashboardAllSellers from "../pages/Dashboard/AdminDashboardAllSellers";
 import AdminDashboardAllUsers from "../pages/Dashboard/AdminDashboardAllUsers";
 import DashboardBuyerMyOrders from "../pages/Dashboard/DashboardBuyerMyOrders";
 import DashboardSellerMyProducts from "../pages/Dashboard/DashboardSellerMyProducts";
 import Payment from "../pages/Dashboard/Payment/Payment";
 import SellerAddProduct from "../pages/Dashboard/SellerAddProduct";
 import Home from "../pages/Home/Home";
-import AdminLogin from "../pages/Login/AdminLogin";
+import AdminSignUp from "../pages/Login/AdminSignUp";
 import Login from "../pages/Login/Login";
 import Signup from "../pages/Signup/Signup";
 import SignupSeller from "../pages/Signup/SignupSeller"
 import DisplayError from "../shared/DisplayError";
+import AdminRoute from "./AdminRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const routes = createBrowserRouter([
@@ -46,16 +47,11 @@ const routes = createBrowserRouter([
         ]
     },
     {
-        path: '/categoryDetails/:catName',
-        element: <OtherPageLayout></OtherPageLayout>,
-        errorElement: <DisplayError></DisplayError>,
-        children: [
-            {
-                path: '/categoryDetails/:catName',
-                element: <PrivateRoute><CategoryDetailsPage></CategoryDetailsPage></PrivateRoute>,
-                loader: ({ params }) => fetch(`http://localhost:5001/bikes?name=${params.catName}`)
-            }
-        ]
+        path: '/categoryDetails/:id',
+        element: <PrivateRoute><CategoryDetailsPage></CategoryDetailsPage></PrivateRoute>,
+        loader: ({ params }) => fetch(`http://localhost:5001/catProducts/${params.id}`),
+        // errorElement: <DisplayError></DisplayError>
+
     },
     {
         path: '/dashboard/buyer',
@@ -98,24 +94,30 @@ const routes = createBrowserRouter([
     },
     {
         path: '/blog',
-        element: <Blog></Blog>
+        element: <Blog></Blog>,
+        errorElement: <DisplayError></DisplayError>,
     },
     {
         path: '/adminLogin',
-        element: <AdminLogin></AdminLogin>
+        element: <AdminSignUp></AdminSignUp>,
+        errorElement: <DisplayError></DisplayError>,
     },
     {
         path: '/dashboard/admin',
-        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        element: <DashboardLayout></DashboardLayout>,
         errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/dashboard/admin',
-                element: <AdminDashboardAllUsers></AdminDashboardAllUsers>
+                element: <AdminRoute><AdminDashboardAllUsers></AdminDashboardAllUsers></AdminRoute>
             },
             {
                 path: '/dashboard/admin/allBuyers',
                 element: <AdminDashboardAllUsers></AdminDashboardAllUsers>
+            },
+            {
+                path: '/dashboard/admin/allSellers',
+                element: <AdminDashboardAllSellers></AdminDashboardAllSellers>
             }
         ]
     }

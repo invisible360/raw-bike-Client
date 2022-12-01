@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
@@ -23,9 +24,10 @@ const DashboardSellerMyProducts = () => {
     const handlAdvertiseProduct = product => {
         console.log(product);
         const advertiseProduct = {
-            sellerName: product.sellerName,
             id: product._id,
+            sellerName: product.sellerName,
             sellerEmail: product.sellerEmail,
+            sellerId: product.sellerId,
             name: product.name,
             price: product.price,
             condition: product.condition,
@@ -34,7 +36,10 @@ const DashboardSellerMyProducts = () => {
             location: product.location,
             description: product.description,
             yearOfPurchase: product.purchaseYear,
-            image: product.image
+            image: product.image,
+            yearsOfUsed: product.yearsOfUsed,
+            originalPrice: product.originalPrice,
+            date: format(new Date(), "PPpp")
         }
 
         fetch('http://localhost:5001/advertiseProducts', {

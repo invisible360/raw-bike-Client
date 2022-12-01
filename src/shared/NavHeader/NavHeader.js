@@ -7,29 +7,25 @@ const NavHeader = () => {
     const { user, logout } = useContext(AuthContext);
 
     const [loggedUser, setLoggedUser] = useState('');
-    const [admin, setAdmin] = useState(false);
+    const [admin, setAdmin] = useState('');
 
     useEffect(() => {
-        fetch(`http://localhost:5001/allUsers`)
+        fetch(`http://localhost:5001/admin`)
             .then(res => res.json())
             .then(data => {
-                // console.log(data);
-                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
-                if (admin) {
-                    setAdmin(true);
-                }
-
-                else {
-
-                    fetch(`http://localhost:5001/users?users=${user?.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            setLoggedUser(data);
-                        })
-
-                }
+                setAdmin(data[0].email);
+                // console.log(data[0].email);
+                // console.log(user?.email);
             })
+    }, [user?.email])
 
+    useEffect(() => {
+        fetch(`http://localhost:5001/users?users=${user?.email}`)
+            .then(res => res.json())
+            .then(data => {
+                setLoggedUser(data);
+
+            })
     }, [user?.email])
 
 
@@ -43,7 +39,7 @@ const NavHeader = () => {
         <li className='text-blue-500'><Link to="/home">Home</Link></li>
         {user && loggedUser.buyer && <li className='text-blue-500'><Link to='/dashboard/buyer'>Dashbord</Link></li>}
         {user && loggedUser.seller && <li className='text-blue-500'><Link to='/dashboard/seller'>Dashbord</Link></li>}
-        {user && admin && <li className='text-blue-500'><Link to='/dashboard/admin'>Dashbord</Link></li>}
+        {admin === user?.email && <li className='text-blue-500'><Link to='/dashboard/admin'>Dashbord</Link></li>}
         <li className='text-blue-500'><Link to="/blog">Blog</Link></li>
 
     </>

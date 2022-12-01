@@ -15,7 +15,7 @@ const AdminDashboardAllUsers = () => {
         }
     })
 
-    const handleDeleteBuyer = id => {
+    const handleDeleteBuyer = (id, email) => {
         const permission = window.confirm('Are Your Sure Want to Delete?')
         // console.log(id);
         if (permission) {
@@ -25,8 +25,19 @@ const AdminDashboardAllUsers = () => {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    refetch();
-                    toast.success(`Buyer Deleted Successfully`)
+                    if (data.acknowledged) {
+                        fetch(`http://localhost:5001/bookings?email=${email}`, {
+                            method: 'DELETE'
+                        })
+                            .then(res => res.json())
+                            .then(result => {
+                                toast.success(`Buyer Deleted Successfully`)
+                                refetch();
+
+                            })
+                    }
+
+
                 })
         }
         else {
@@ -66,7 +77,7 @@ const AdminDashboardAllUsers = () => {
                                             <p>{buyer.email}</p>
                                         </td>
                                         <td className="px-3 py-2">
-                                            <Link onClick={() => handleDeleteBuyer(buyer._id)} className='btn btn-sm btn-warning'>X</Link>
+                                            <Link onClick={() => handleDeleteBuyer(buyer._id, buyer.email)} className='btn btn-sm btn-warning'>X</Link>
                                         </td>
 
 

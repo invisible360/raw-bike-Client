@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import { useForm } from 'react-hook-form';
@@ -9,7 +9,7 @@ import Loader from '../../shared/Loader';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const { googleLogin, login } = useContext(AuthContext);
+    const { googleLogin, login, user, userDelete } = useContext(AuthContext);
 
     const [loginError, setLoginError] = useState('');
 
@@ -18,21 +18,22 @@ const Login = () => {
     const location = useLocation();
     const from = location.state?.from.pathname || '/';
 
-    const { data: allUsers = [] } = useQuery({
-        queryKey: ['allUsers'],
-        queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/allUsers`);
-            const data = await res.json();
-            // console.log(data);
-            return data;
-        }
-    })
+    const [admin, setAdmin] = useState('');
 
+    useEffect(() => {
+        fetch(`http://localhost:5001/admin`)
+            .then(res => res.json())
+            .then(data => {
+                setAdmin(data[0].email);
+                // console.log(data[0].email);
+                // console.log(user?.email);
+            })
+    }, [user?.email])
 
     const { data: buyers = [], isLoading } = useQuery({
         queryKey: ['buyers'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5001/buyers`);
+            const res = await fetch(`http://localhost:5001/buyers`)
             const data = await res.json();
             return data;
         }
@@ -46,32 +47,38 @@ const Login = () => {
                 const user = result.user;
                 console.log(user);
 
-                const admin = allUsers.find(ad => ad.email === user?.email && ad.role === 'admin')
-                if (admin) {
-                    toast.success('Admin Logged In');
-                    navigate(from, { replace: true });
-                    reset();
-                }
+                fetch(`http://localhost:5001/users?users=${data.email}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (admin === user?.email) {
+                            toast.success("Admin logged");
+                            navigate(from, { replace: true });
+                            reset();
 
-                else {
-                    fetch(`http://localhost:5001/users?users=${data.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            if (data.buyer) {
-                                toast.success("buyer logged");
-                                navigate(from, { replace: true });
-                                reset();
+                        }
+                        else if (data.buyer) {
+                            toast.success("buyer logged");
+                            navigate(from, { replace: true });
+                            reset();
 
-                            }
-                            else {
-                                toast.success("seller logged");
-                                navigate(from, { replace: true });
-                                reset();
-                            }
+                        }
+                        else if (data.seller) {
+                            toast.success("seller logged");
+                            navigate(from, { replace: true });
+                            reset();
+                        }
+                        else {
+                            toast.error('Your Account is deleted by Admin Panel. Please Sign Up Again');
+                            userDelete()
+                                .then(() => {
+                                    reset();
+                                })
+                                .catch(er => console.log(er))
+                        }
 
-                        })
+                    })
 
-                }
+                
             })
             .catch(error => {
                 console.log(error)

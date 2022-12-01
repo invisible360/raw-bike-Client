@@ -2,9 +2,8 @@ import React from 'react';
 import { GoVerified } from "react-icons/go";
 import { PhotoProvider, PhotoView } from 'react-photo-view';
 
-const Bike = ({ bike, setBikeInfoForModal, setModal, buyerInfo }) => {
-    // console.log(bike);
-
+const Bike = ({ bike, setBikeInfoForModal, setModal, buyerInfo, setBuyerInfo }) => {
+    console.log(bike);
 
 
     return (
@@ -29,27 +28,29 @@ const Bike = ({ bike, setBikeInfoForModal, setModal, buyerInfo }) => {
                                         <p className="text-sm text-gray-600">{bike.location}</p>
                                     </div>
                                     <div className="text-right">
-                                        <p className="text-lg font-semibold">${bike.resalePrice}</p>
+                                        <p className="text-lg font-semibold">${bike.price}</p>
                                         <p className="">Original Price: <span className='text-sm line-through text-gray-400'>${bike.originalPrice}</span></p>
                                     </div>
                                 </div>
                                 <div className="flex text-sm divide-x mt-5">
-                                    <span type="button" className="flex items-center px-2 py-1 pl-0 space-x-1">Posted Date:</span>
-                                    <span type="button" className="flex items-center px-2 space-x-1">Used: {bike.yearsOfUsed} Years</span>
+                                    <span type="button" className="flex items-center px-2 py-1 pl-0 space-x-1">Posted Date: {bike.date}</span>
+                                    <span type="button" className="flex items-center px-2 space-x-1">Used: {bike.yearsOfUsed}{bike.yearsOfUsed} Years</span>
                                 </div>
                                 <div className='flex flex-col lg:justify-between'>
 
                                     <div className='flex items-center'>
-                                        {buyerInfo &&
-                                            <>
-                                                <span>Seller: {bike.sellerName}</span>
-                                                <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
-                                            </>}
+
+                                        <span>Seller: {bike.sellerName}</span>
+                                        {
+                                            bike.isVerified && <span className='text-blue-500 ml-2'><GoVerified></GoVerified></span>
+                                        }
+
                                     </div>
 
 
                                     <label type="button" onClick={() => {
-                                        setBikeInfoForModal(bike);
+                                        setBikeInfoForModal(bike)
+                                        setBuyerInfo(buyerInfo)
                                         setModal(true)
                                     }} htmlFor="booking-modal" className="my-2 w-1/2 btn btn-success px-2 py-2 border rounded-md bg-cyan-600 text-gray-50 border-cyan-600">Book Now</label>
 

@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import { format } from 'date-fns';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
@@ -25,23 +27,35 @@ const SellerAddProduct = () => {
 
 
 
-    const bikeCategories = [
-        {
-            _id: 1,
-            name: "Sports Bikes",
+    // const bikeCategories = [
+    //     {
+    //         _id: 1,
+    //         name: "Sports Bikes",
 
-        },
-        {
-            _id: 2,
-            name: "Scooters",
+    //     },
+    //     {
+    //         _id: 2,
+    //         name: "Scooters",
 
-        },
-        {
-            _id: 3,
-            name: "Ride Sharing Bikes",
+    //     },
+    //     {
+    //         _id: 3,
+    //         name: "Ride Sharing Bikes",
 
-        },
-    ]
+    //     },
+    // ]
+
+    const { data: bikeCategories = [] } = useQuery({
+        queryKey: ['bikeCategories'],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5001/bikeCategories`)
+            const data = res.json()
+            console.log(data);
+            return data
+
+        }
+    })
+
 
     const handleAddProduct = data => {
         const image = data.image[0];
@@ -59,6 +73,7 @@ const SellerAddProduct = () => {
                     const product = {
                         sellerName: loggedUser.seller.name,
                         sellerEmail: loggedUser.seller.email,
+                        sellerId: loggedUser.seller._id,
                         name: data.name,
                         price: data.price,
                         condition: data.condition,
@@ -67,7 +82,10 @@ const SellerAddProduct = () => {
                         location: data.location,
                         description: data.description,
                         yearOfPurchase: data.purchaseYear,
-                        image: imgData.data.url
+                        image: imgData.data.url,
+                        yearsOfUsed: data.usedYear,
+                        originalPrice: data.originalPrice,
+                        date: format(new Date(), "PPpp")
                     }
 
                     // save product information to the database
@@ -105,8 +123,16 @@ const SellerAddProduct = () => {
                     </div>
 
                     <div className="form-control w-full">
-                        <label className="label"> <span className="label-text">Price</span></label>
+                        <label className="label"> <span className="label-text">Resell Price</span></label>
                         <input type="number" {...register("price", {
+                            required: true
+                        })} className="input input-bordered w-full" />
+                        {errors.email && <p className='text-red-500'>{errors.price.message}</p>}
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label"> <span className="label-text">Original Price</span></label>
+                        <input type="number" {...register("originalPrice", {
                             required: true
                         })} className="input input-bordered w-full" />
                         {errors.email && <p className='text-red-500'>{errors.price.message}</p>}
@@ -131,7 +157,7 @@ const SellerAddProduct = () => {
                             {
                                 bikeCategories.map(category => <option
                                     key={category._id}
-                                    value={category.name}
+                                    value={category._id}
                                 >{category.name}</option>)
                             }
                         </select>
@@ -139,7 +165,7 @@ const SellerAddProduct = () => {
 
                     <div className="form-control w-full">
                         <label className="label"> <span className="label-text">Mobile</span></label>
-                        <input type="text" {...register("mobile", {
+                        <input type="number" {...register("mobile", {
                             required: true
                         })} className="input input-bordered w-full" />
                         {errors.email && <p className='text-red-500'>{errors.mobile.message}</p>}
@@ -157,6 +183,14 @@ const SellerAddProduct = () => {
                     <div className="form-control w-full">
                         <label className="label"> <span className="label-text">Year of Purchased</span></label>
                         <input type="number" {...register("purchaseYear", {
+                            required: true
+                        })} className="input input-bordered w-full" />
+                        {errors.email && <p className='text-red-500'>{errors.purchaseYear.message}</p>}
+                    </div>
+
+                    <div className="form-control w-full">
+                        <label className="label"> <span className="label-text">Year of Used</span></label>
+                        <input type="number" {...register("usedYear", {
                             required: true
                         })} className="input input-bordered w-full" />
                         {errors.email && <p className='text-red-500'>{errors.purchaseYear.message}</p>}

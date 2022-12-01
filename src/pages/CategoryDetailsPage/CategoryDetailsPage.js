@@ -1,105 +1,67 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext/AuthProvider';
+import useBuyer from '../../hooks/useBuyer';
+import Footer from '../../shared/Footer/Footer';
+import NavHeader from '../../shared/NavHeader/NavHeader';
 import BookingModal from '../BookingModal/BookingModal';
 import EmptyModal from '../BookingModal/EmptyModal';
 import Bike from './Bike';
 
 const CategoryDetailsPage = () => {
 
-    const catBikes = useLoaderData();
+    // http://localhost:5001/bikes?name=${params.catName}
+
+    const catProducts = useLoaderData();
+    // console.log(catProducts);
+
+    const { user } = useContext(AuthContext);
+
+    const [isBuyer, isBuyerLoading] = useBuyer(user?.email)
+    console.log(isBuyer);
 
     const [bikeInfoForModal, setBikeInfoForModal] = useState(null);
     const [modal, setModal] = useState(false)
     const [buyerInfo, setBuyerInfo] = useState('');
-    const [sellerInfo, setsSellerInfo] = useState({});
-    // const [userName, setUsername] = useState('');
 
+    console.log({ buyerInfo });
 
-
-    const { user } = useContext(AuthContext);
-
-    
-    const [loggedUser, setLoggedUser] = useState('');
-    const [admin, setAdmin] = useState(false);
-
-    useEffect(() => {
-        fetch(`http://localhost:5001/allUsers`)
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-                const admin = data.find(ad => ad.email === user?.email && ad.role === 'admin')
-                if (admin) {
-                    setAdmin(true);
-                }
-
-                else {
-
-                    fetch(`http://localhost:5001/users?users=${user?.email}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            setLoggedUser(data);
-                        })
-
-                }
-            })
-
-    }, [user?.email])
-
-
-    useEffect(() => {
-        fetch(`http://localhost:5001/users?users=${user.email}`)
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data);
-
-                if (data.buyer) {
-                    setBuyerInfo(data.buyer.name);
-                    // setUsername(data.buyer.name);
-
-                }
-                else {
-                    setsSellerInfo(data.seller);
-                    // setUsername(data.seller.name);
-                }
-
-
-            })
-    }, [user.email])
 
 
     return (
-        <div className='w-[95%] mx-auto lg:w-full'>
-            <h1 className='text-4xl text-center font-bold my-10'>Bike in this Category: {catBikes.length}</h1>
+        <div className='min-h-screen'>
+            <NavHeader></NavHeader>
+            <div className='w-[95%] mx-auto lg:w-full'>
+                <h1 className='text-4xl text-center font-bold my-10'>Bike in this Category: {catProducts.length}</h1>
 
-            <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
-                {
-                    catBikes.map(bike => <Bike
-                        key={bike._id}
-                        bike={bike}
-                        setModal={setModal}
-                        buyerInfo={buyerInfo}
-                        setBikeInfoForModal={setBikeInfoForModal}
-                    ></Bike>)
-                }
+                <div className='grid grid-cols-1 lg:grid-cols-2 gap-5'>
+                    {
+                        catProducts.map(bike => <Bike
+                            key={bike._id}
+                            bike={bike}
+                            setModal={setModal}
+                            buyerInfo={isBuyer}
+                            setBuyerInfo={setBuyerInfo}
+                            setBikeInfoForModal={setBikeInfoForModal}
+                        ></Bike>)
 
-                {
-                    Object.keys(sellerInfo).length > 0 || admin ?
-                        <>
+
+                    }
+
+                    {
+                        modal && buyerInfo ? <BookingModal
+                            bikeInfoForModal={bikeInfoForModal}
+                            buyerInfo={buyerInfo}
+                            setModal={setModal}
+                        ></BookingModal>
+                            :
                             <EmptyModal></EmptyModal>
-                        </>
-                        :
-                        <>
-                            {
-                                modal &&
-                                <BookingModal
-                                    bikeInfoForModal={bikeInfoForModal}
-                                    setModal={setModal}
-                                    buyerInfo={buyerInfo}
-                                ></BookingModal>
-                            }
-                        </>
-                }
+                    }
+                    
+                </div>
+            </div>
+            <div className='absolute bottom-0 right-0 left-0  '>
+                <Footer></Footer>
             </div>
         </div>
     );

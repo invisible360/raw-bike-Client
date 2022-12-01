@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
+import { createUserWithEmailAndPassword, deleteUser, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 import { createContext } from 'react';
 import app from '../../firebase/firebase.config';
 
@@ -45,6 +45,9 @@ const AuthProvider = ({ children }) => {
         // localStorage.removeItem('genius-token')
         return signOut(auth)
     }
+    const userDelete = () => {
+        return deleteUser(auth.currentUser);
+    }
 
     const authInfo = {
         user,
@@ -53,7 +56,9 @@ const AuthProvider = ({ children }) => {
         login,
         googleLogin,
         updateUser,
-        logout
+        logout,
+        userDelete
+
     }
 
     return (
